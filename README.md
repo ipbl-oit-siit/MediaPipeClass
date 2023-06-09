@@ -4,14 +4,14 @@
 
 ---
 ## specification of mediapipe and our mediapipe class
-- [ObjectDetecion](ObjectDetecion.md)
-- [HandLandmark](HandLandmark.md)
-- [FaceDetection](FaceDetection.md)
-- [FaceLandmark](FaceLandmark.md)
-- [HandLandmark](HandLandmark.md)
-- [HandGestureRecognition](HandGestureRecognition.md)
-- [ImageSegmentation](ImageSegmentation.md)
-- [PoseLandmark](PoseLandmark.md)
+- [ObjectDetecion](./ObjectDetecion.md)
+- [HandLandmark](./HandLandmark.md)
+- [FaceDetection](./FaceDetection.md)
+- [FaceLandmark](./FaceLandmark.md)
+- [HandLandmark](./HandLandmark.md)
+- [HandGestureRecognition](./HandGestureRecognition.md)
+- [ImageSegmentation](./ImageSegmentation.md)
+- [PoseLandmark](./PoseLandmark.md)
 
 ---
 ## how to use
