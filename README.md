@@ -4,7 +4,7 @@
 
 ---
 ## specification of mediapipe and our mediapipe class
-- [ObjectDetecion](./ObjectDetecion.md)
+- [ObjectDetecion](ObjectDetection.md)
 - [HandLandmark](./HandLandmark.md)
 - [FaceDetection](./FaceDetection.md)
 - [FaceLandmark](./FaceLandmark.md)
