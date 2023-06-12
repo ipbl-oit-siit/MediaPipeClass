@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import os
 import urllib.request
 import time
@@ -55,6 +56,7 @@ class MediapipeFaceLandmark():
             running_mode=mp.tasks.vision.RunningMode.VIDEO
         )
         self.detector = mp.tasks.vision.FaceLandmarker.create_from_options(options)
+        self.num_landmark_points = None
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
@@ -72,17 +74,19 @@ class MediapipeFaceLandmark():
     def detect(self, image):
         self.size = image.shape
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
-        self.face_landmarker_result = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
-        self.num_detected_faces = len(self.face_landmarker_result.face_landmarks)
-        return self.face_landmarker_result
+        self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
+        self.num_detected_faces = len(self.results.face_landmarks)
+        if self.num_landmark_points == None and self.num_detected_faces > 0:
+            self.num_landmark_points = len(self.results.face_landmarks[0])
+        return self.results
 
     def get_normalized_landmark(self, id_face, id_landmark):
         if self.num_detected_faces == 0:
             print('no face')
             return None
-        x = self.face_landmarker_result.face_landmarks[id_face][id_landmark].x
-        y = self.face_landmarker_result.face_landmarks[id_face][id_landmark].y
-        z = self.face_landmarker_result.face_landmarks[id_face][id_landmark].z
+        x = self.results.face_landmarks[id_face][id_landmark].x
+        y = self.results.face_landmarks[id_face][id_landmark].y
+        z = self.results.face_landmarks[id_face][id_landmark].z
         return np.array([x, y, z])
 
     def get_landmark(self, id_face, id_landmark):
@@ -90,21 +94,27 @@ class MediapipeFaceLandmark():
             print('no face')
             return None
         height, width = self.size[:2]
-        x = self.face_landmarker_result.face_landmarks[id_face][id_landmark].x
-        y = self.face_landmarker_result.face_landmarks[id_face][id_landmark].y
-        z = self.face_landmarker_result.face_landmarks[id_face][id_landmark].z
-        return np.array([int(x*width), int(y*height), int(z*width)])
+        x = self.results.face_landmarks[id_face][id_landmark].x
+        y = self.results.face_landmarks[id_face][id_landmark].y
+        z = self.results.face_landmarks[id_face][id_landmark].z
+        return np.array([int(x*width), int(y*height), int(z*width)], dtype=int)
+
+    def get_landmark_presence(self, id_hand, id_landmark):
+        return self.results.face_landmarks[id_hand][id_landmark].presence
+
+    def get_landmark_visibility(self, id_hand, id_landmark):
+        return self.results.face_landmarks[id_hand][id_landmark].visibility
 
     def visualize(self, img):
         annotated_image = np.copy(img)
-        for i, face in enumerate(self.face_landmarker_result.face_landmarks):
+        for i, face in enumerate(self.results.face_landmarks):
             for j in range(len(face)):
                 point = self.get_landmark(i, j)
                 cv2.circle(annotated_image, tuple(point[:2]), self.RADIUS_SIZE, self.FONT_COLOR, thickness=self.FONT_THICKNESS)
         return annotated_image
 
     def visualize_with_mp(self, rgb_image):
-        face_landmarks_list = self.face_landmarker_result.face_landmarks
+        face_landmarks_list = self.results.face_landmarks
         annotated_image = np.copy(rgb_image)
         # Loop through the detected faces to visualize.
         for idx in range(len(face_landmarks_list)):
@@ -152,7 +162,7 @@ def main():
         # FaceLandmarker requires horizontal flip for input image
         flipped_frame = cv2.flip(frame, 1)
 
-        face_landmarker_result = Face.detect(flipped_frame)
+        results = Face.detect(flipped_frame)
 
         if Face.num_detected_faces > 0:
             index_face = 0 #

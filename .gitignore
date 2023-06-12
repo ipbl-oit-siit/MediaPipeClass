@@ -1,3 +1,13 @@
+# jinno
+myfacelmk.py
+myhands.py
+myhands_ges.py
+myhands_game.py
+mypose.py
+models/
+pip/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

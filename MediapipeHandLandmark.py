@@ -27,6 +27,7 @@ class MediapipeHandLandmark():
     HANDEDNESS_TEXT_COLOR = (88, 205, 54) # vibrant green
 
     # hand landmark id
+    NUM_LMK = 21
     WRIST = 0
     THUMB_CMC = 1
     THUMB_MCP = 2
@@ -71,6 +72,7 @@ class MediapipeHandLandmark():
             running_mode=mp.tasks.vision.RunningMode.VIDEO
         )
         self.detector = mp.tasks.vision.HandLandmarker.create_from_options(options)
+        self.num_landmark_points = self.NUM_LMK # default
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
@@ -90,6 +92,8 @@ class MediapipeHandLandmark():
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
         self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
         self.num_detected_hands = len(self.results.hand_landmarks)
+        if self.num_landmark_points == self.NUM_LMK and self.num_detected_hands > 0:
+            self.num_landmark_points = len(self.results.hand_landmarks[0])
         return self.results
 
     def get_normalized_landmark(self, id_hand, id_landmark):
@@ -110,6 +114,12 @@ class MediapipeHandLandmark():
         y = self.results.hand_landmarks[id_hand][id_landmark].y
         z = self.results.hand_landmarks[id_hand][id_landmark].z
         return np.array([int(x*width), int(y*height), int(z*width)])
+
+    def get_landmark_presence(self, id_hand, id_landmark):
+        return self.results.hand_landmarks[id_hand][id_landmark].presence
+
+    def get_landmark_visibility(self, id_hand, id_landmark):
+        return self.results.hand_landmarks[id_hand][id_landmark].visibility
 
     def get_handedness(self, id_hand):
         if self.num_detected_hands == 0:

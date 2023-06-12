@@ -25,6 +25,7 @@ class MediapipePoseLandmark():
     FONT_COLOR = (0, 255, 0)
 
     # pose landmark id
+    NUM_LMK = 33
     NOSE = 0
     LEFT_EYE_INNER = 1
     LEFT_EYE = 2
@@ -82,6 +83,7 @@ class MediapipePoseLandmark():
             running_mode=mp.tasks.vision.RunningMode.VIDEO
         )
         self.detector = mp.tasks.vision.PoseLandmarker.create_from_options(options)
+        self.num_landmark_points = self.NUM_LMK # default
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
@@ -97,15 +99,13 @@ class MediapipePoseLandmark():
         return model_path
 
     def detect(self, img):
-      self.size = img.shape
-      # 画像データをmediapipe用に変換する
-      mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
-
-      # ポーズ検出を実行する
-      self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
-      self.num_detected_poses = len(self.results.pose_landmarks)
-
-      return self.results
+        self.size = img.shape
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
+        self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
+        self.num_detected_poses = len(self.results.pose_landmarks)
+        if self.num_landmark_points == self.NUM_LMK and self.num_detected_poses > 0:
+            self.num_landmark_points = len(self.results.pose_landmarks[0])
+        return self.results
 
     def get_normalized_landmark(self, id_pose, id_landmark):
         if self.num_detected_poses == 0:
