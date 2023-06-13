@@ -67,6 +67,9 @@ class MediapipeImageSegmentation():
         masks = self.get_segmentation_masks()
         return 255*(masks == skin_type).astype(np.uint8)
 
+    def get_confidence_mask(self, skin_type):
+        return self.results.confidence_masks[skin_type].numpy_view()
+
     def get_normalized_masks(self):
         mask = self.results.category_mask.numpy_view()
         if np.max(mask) == 0:
@@ -85,7 +88,7 @@ def main():
             print("Ignoring empty camera frame.")
             break
 
-        segmented_masks = ImgSeg.detect(frame)
+        results = ImgSeg.detect(frame)
 
         normalized_masks = ImgSeg.get_normalized_masks()
         cv2.imshow('multiclass mask', cv2.applyColorMap(normalized_masks, cv2.COLORMAP_JET))

@@ -72,7 +72,7 @@ class MediapipeHandLandmark():
             running_mode=mp.tasks.vision.RunningMode.VIDEO
         )
         self.detector = mp.tasks.vision.HandLandmarker.create_from_options(options)
-        self.num_landmark_points = self.NUM_LMK # default
+        self.num_landmarks = self.NUM_LMK # default
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
@@ -92,8 +92,6 @@ class MediapipeHandLandmark():
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
         self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
         self.num_detected_hands = len(self.results.hand_landmarks)
-        if self.num_landmark_points == self.NUM_LMK and self.num_detected_hands > 0:
-            self.num_landmark_points = len(self.results.hand_landmarks[0])
         return self.results
 
     def get_normalized_landmark(self, id_hand, id_landmark):
@@ -149,9 +147,10 @@ class MediapipeHandLandmark():
             for j in range(len(hand)):
                 point = self.get_landmark(i, j)
                 cv2.circle(annotated_image, tuple(point[:2]), self.RADIUS_SIZE, color, thickness=self.FONT_THICKNESS)
-                txt = handedness+'('+'{:#.2f}'.format(score)+')'
-                wrist_point_for_text = (wrist_point[0]+self.H_MARGIN, wrist_point[1]+self.V_MARGIN)
-                cv2.putText(annotated_image, org=wrist_point_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=self.FONT_SIZE, color=color, thickness=self.FONT_THICKNESS, lineType=cv2.LINE_4)
+
+            txt = handedness+'('+'{:#.2f}'.format(score)+')'
+            wrist_point_for_text = (wrist_point[0]+self.H_MARGIN, wrist_point[1]+self.V_MARGIN)
+            cv2.putText(annotated_image, org=wrist_point_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=self.FONT_SIZE, color=color, thickness=self.FONT_THICKNESS, lineType=cv2.LINE_4)
         return annotated_image
 
     def visualize_with_mp(self, image):

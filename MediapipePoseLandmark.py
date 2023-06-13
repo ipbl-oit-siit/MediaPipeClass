@@ -83,7 +83,7 @@ class MediapipePoseLandmark():
             running_mode=mp.tasks.vision.RunningMode.VIDEO
         )
         self.detector = mp.tasks.vision.PoseLandmarker.create_from_options(options)
-        self.num_landmark_points = self.NUM_LMK # default
+        self.num_landmarks = self.NUM_LMK # default
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
@@ -103,8 +103,6 @@ class MediapipePoseLandmark():
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
         self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
         self.num_detected_poses = len(self.results.pose_landmarks)
-        if self.num_landmark_points == self.NUM_LMK and self.num_detected_poses > 0:
-            self.num_landmark_points = len(self.results.pose_landmarks[0])
         return self.results
 
     def get_normalized_landmark(self, id_pose, id_landmark):

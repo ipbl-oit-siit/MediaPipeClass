@@ -4,17 +4,18 @@
 
 ---
 ## specification of mediapipe and our mediapipe class
-- [ObjectDetecion](ObjectDetection.md)
-- [HandLandmark](./HandLandmark.md)
-- [HandGestureRecognition](./HandGestureRecognition.md)
-- [ImageSegmentation](./ImageSegmentation.md)
-- [FaceDetection](./FaceDetection.md)
-- [FaceLandmark](./FaceLandmark.md)
-- [PoseLandmark](./PoseLandmark.md)
+- [ObjectDetecion](docs/ObjectDetection.md)
+- [HandLandmark](docs/HandLandmark.md)
+- [HandGestureRecognition](docs/HandGestureRecognition.md)
+- [ImageSegmentation](docs/ImageSegmentation.md)
+- [FaceDetection](docs/FaceDetection.md)
+- [FaceLandmark](docs/FaceLandmark.md)
+- [PoseLandmark](docs/PoseLandmark.md)
 
 ---
 ## how to use
-- ObjectDetection
+- The following is a simple description of use of our class. For more detailed usage, please refer to :o:[HOW2USE(more)](docs/how2use_more.md). Various examples are presented.
+### ObjectDetection
 ```python
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
@@ -36,7 +37,7 @@ cv2.destroyAllWindows()
 Obj.release()
 cap.release()
 ```
-- HandLandmark
+### HandLandmark
 ```python
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
@@ -59,7 +60,7 @@ cv2.destroyAllWindows()
 Hand.release()
 cap.release()
 ```
-- HandGestureRecognition
+### HandGestureRecognition
 ```python
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
@@ -83,7 +84,7 @@ cv2.destroyAllWindows()
 HandGes.release()
 cap.release()
 ```
-- ImageSegmentation
+### ImageSegmentation
 ```python
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
@@ -107,7 +108,7 @@ cv2.destroyAllWindows()
 Seg.release()
 cap.release()
 ```
-- FaceDetection
+### FaceDetection
 ```python
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
@@ -129,7 +130,7 @@ cv2.destroyAllWindows()
 Face.release()
 cap.release()
 ```
-- FaceLandmark
+### FaceLandmark
 ```python
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
@@ -151,7 +152,7 @@ cv2.destroyAllWindows()
 Face.release()
 cap.release()
 ```
-- MediapipePoseLandmark
+### MediapipePoseLandmark
 ```python
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"

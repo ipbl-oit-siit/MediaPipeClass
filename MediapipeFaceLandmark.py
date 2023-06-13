@@ -26,6 +26,7 @@ class MediapipeFaceLandmark():
 
     # face mesh landmarks
     # https://github.com/google/mediapipe/blob/master/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png
+    NUM_LMK = 478
 
     # blendshape landmarks
     # https://storage.googleapis.com/mediapipe-assets/Model%20Card%20Blendshape%20V2.pdf
@@ -56,7 +57,7 @@ class MediapipeFaceLandmark():
             running_mode=mp.tasks.vision.RunningMode.VIDEO
         )
         self.detector = mp.tasks.vision.FaceLandmarker.create_from_options(options)
-        self.num_landmark_points = None
+        self.num_landmarks = self.NUM_LMK
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
@@ -76,8 +77,6 @@ class MediapipeFaceLandmark():
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
         self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
         self.num_detected_faces = len(self.results.face_landmarks)
-        if self.num_landmark_points == None and self.num_detected_faces > 0:
-            self.num_landmark_points = len(self.results.face_landmarks[0])
         return self.results
 
     def get_normalized_landmark(self, id_face, id_landmark):
