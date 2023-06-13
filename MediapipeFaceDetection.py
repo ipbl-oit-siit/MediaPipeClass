@@ -21,6 +21,7 @@ class MediapipeFaceDetection():
     TEXT_COLOR = (255, 0, 0)  # red
 
     # blaze_face_short_range
+    NUM_LMK = 6
     LEFT_EYE = 0
     RIGHT_EYE = 1
     NOSE_TIP = 2
@@ -45,6 +46,7 @@ class MediapipeFaceDetection():
             running_mode=mp.tasks.vision.RunningMode.VIDEO
         )
         self.detector = mp.tasks.vision.FaceDetector.create_from_options(options)
+        self.num_landmarks = self.NUM_LMK # default
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
@@ -60,11 +62,11 @@ class MediapipeFaceDetection():
         return model_path
 
     def detect(self, img):
-      self.size = img.shape
-      mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
-      self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
-      self.num_detected_faces = len(self.results.detections)
-      return self.results
+        self.size = img.shape
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
+        self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
+        self.num_detected_faces = len(self.results.detections)
+        return self.results
 
     def get_normalized_landmark(self, id_face, id_keypoint):
         if self.num_detected_faces == 0:
@@ -82,6 +84,13 @@ class MediapipeFaceDetection():
         x = self.results.detections[id_face].keypoints[id_keypoint].x
         y = self.results.detections[id_face].keypoints[id_keypoint].y
         return np.array([int(x*width), int(y*height)])
+
+    def get_bounding_box(self, id_face):
+        x = self.results.detections[id_face].bounding_box.origin_x
+        y = self.results.detections[id_face].bounding_box.origin_y
+        w = self.results.detections[id_face].bounding_box.width
+        h = self.results.detections[id_face].bounding_box.height
+        return np.array([x, y, w, h])
 
     def get_score(self, id_face):
         if self.num_detected_faces == 0:
@@ -101,8 +110,7 @@ class MediapipeFaceDetection():
             # Draw keypoints
             for keypoint in detection.keypoints:
                 keypoint_px = [int(keypoint.x * width), int(keypoint.y*height)]
-                color, thickness, radius = (0, 255, 0), 2, 2
-                cv2.circle(annotated_image, keypoint_px, thickness, color, radius)
+                cv2.circle(annotated_image, keypoint_px, 2, (0,255,0), 2)
                 # Draw label and score
                 category = detection.categories[0]
                 category_name = category.category_name
