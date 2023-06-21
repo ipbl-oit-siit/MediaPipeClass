@@ -4,8 +4,8 @@
 
 
 ---
-## How to use landmarks
-- `HandLandmark`, `FaceLandmark`, `PoseLandmark` detect landmarks. 
+## ![#00ff00](https://via.placeholder.com/15/00ff00/000000?text=+) How to use landmarks
+- `HandLandmark`, `FaceLandmark`, `PoseLandmark` detect landmarks.
     - `HandLandmark`: 21 points<br>
     <image src="https://developers.google.com/static/mediapipe/images/solutions/hand-landmarks.png" width="50%" height="50%"><br>
     - `FaceLandmark`: 478 points<br>
@@ -33,59 +33,69 @@
     - [PoseLandmark](PoseLandmark.md)
 
 ### ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) how to refer the all landmarks
+<image src="../image/how2referlmk.jpg" width="30%" height="30%"><br>
 - sample code
-```python
-import os
-os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
-import cv2
-import numpy as np
-import time
-from MediapipeHandLandmark import MediapipeHandLandmark as HandLmk
+    ```python
+    import os
+    os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
+    import cv2
+    import numpy as np
+    import time
+    from MediapipeHandLandmark import MediapipeHandLandmark as HandLmk
 
-device = 0 # cameera device number
+    device = 0 # cameera device number
 
-def main():
-    # For webcam input:
-    global device
+    wname = 'MediaPipe HandLandmark'
+    cv2.namedWindow(wname, cv2.WINDOW_NORMAL)
 
-    cap = cv2.VideoCapture(device)
-    Hand = HandLmk()
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            print("Ignoring empty camera frame.")
-            # If loading a video, use 'break' instead of 'continue'.
-            continue
+    def main():
+        # For webcam input:
+        global device
 
-        # Flip the image horizontally for a later selfie-view display, and convert
-        flipped_frame = cv2.flip(frame, 1)        
+        cap = cv2.VideoCapture(device)
+        Hand = HandLmk()
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                print("Ignoring empty camera frame.")
+                # If loading a video, use 'break' instead of 'continue'.
+                continue
 
-        results = Hand.detect(flipped_frame)
+            # Flip the image horizontally for a later selfie-view display, and convert
+            flipped_frame = cv2.flip(frame, 1)
 
+            results = Hand.detect(flipped_frame)
+
+            # Draw the all landmarks on the image.
+            for id_hand in range(Hand.num_detected_hands): # all hands
+                for id_lmk in range(Hand.num_landmarks): # all landmarks
+                    landmark_point = Hand.get_landmark(id_hand, id_lmk)
+                    cv2.circle(flipped_frame, (landmark_point[0], landmark_point[1]), 1, (0, 0, 255), 2)
+                    # cv2.circle(flipped_frame, tuple(landmark_point[:2]), 1, (0, 0, 255), 2)
+
+            cv2.imshow(wname, flipped_frame)
+            if cv2.waitKey(5) & 0xFF == ord('q'):
+                break
+        cap.release()
+
+    if __name__ == '__main__':
+        main()
+    ```
+- function sample
+    ```python
+    def draw_hand_landmarks(image, Hand):
         # Draw the all landmarks on the image.
         for id_hand in range(Hand.num_detected_hands): # all hands
             for id_lmk in range(Hand.num_landmarks): # all landmarks
-                landmark_point = Hand.get_landmark(id_hand, id_lmk)
-                cv2.circle(flipped_frame, (landmark_point[0], landmark_point[1]), 1, (0, 0, 255), 2)
-                # cv2.circle(flipped_frame, tuple(landmark_point[:2]), 1, (0, 0, 255), 2)
+                landmark_point = Hand.get_landmark(id_hand, id_lmk) # get landmark
+                cv2.circle(image, tuple(landmark_point[:2]), 1, (0, 0, 255), 2) # draw landmark
+    ```
+    ```python
+    draw_hand_landmarks(flipped_frame, Hand)
+    cv2.imshow(wname, flipped_frame)
+    ```
 
-        cv2.imshow('MediaPipe HandLandmark', flipped_frame)
-        if cv2.waitKey(5) & 0xFF == ord('q'):
-            break
-    cap.release()
 
-if __name__ == '__main__':
-main()
-```
-- function sample
-```python
-def draw_hand_landmarks(image, Hand):
-    # Draw the all landmarks on the image.
-    for id_hand in range(Hand.num_detected_hands): # all hands
-        for id_lmk in range(Hand.num_landmarks): # all landmarks
-            landmark_point = Hand.get_landmark(id_hand, id_lmk) # get landmark
-            cv2.circle(image, tuple(landmark_point[:2]), 1, (0, 0, 255), 2) # draw landmark
-```
 ### ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) how to refer only to specific landmarks
 - function sample
 ```python
@@ -177,14 +187,14 @@ pt_pip = Hand.get_landmark(id_hand, Hand.INDEX_FINGER_PIP)
 vec1 = pt_mcp - pt_pip # vector (pip -> mcp)
 vec2 = (0, -1)
 
-angle = calc_angle(vec1[:2], vec2) # vec1 has z-coordinate
+angle = calc_angle(vec1[:2], vec2) # vec1 has 3-dimension
 if pt_tip[0] - pt_pip[0] < 0:
     angle = 360 - angle
 print(angle)
 ```
 
 ---
-## Original contents of each class
+## ![#00ff00](https://via.placeholder.com/15/00ff00/000000?text=+) Original contents of each class
 ### ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `HandLandmark`
 - `HandLandmark` can discriminate between left and right hand.
 - The following is sample function to draw with different colors for the left and right hands.
