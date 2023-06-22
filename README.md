@@ -14,9 +14,12 @@
 
 ---
 ## how to use
-- The following is a simple description of use of our class. For more detailed usage, please refer to :o:[HOW2USE(more)](docs/how2use_more.md). Various examples are presented.
+1. The following is a simple description of use of our class. Let's try to run them.
+1. Next, go to the following page, which outlines the detailed usage of each of them, and execute them all.
+    1. :o:[HOW2USE(more)](docs/how2use_more.md)
 ### ObjectDetection
 ```python
+# obj_simple.py
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
@@ -39,6 +42,7 @@ cap.release()
 ```
 ### HandLandmark
 ```python
+# hand_simple.py
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
@@ -62,6 +66,7 @@ cap.release()
 ```
 ### HandGestureRecognition
 ```python
+# hand_ges_simple.py
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
@@ -86,6 +91,7 @@ cap.release()
 ```
 ### ImageSegmentation
 ```python
+# seg_simple.py
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
@@ -110,6 +116,7 @@ cap.release()
 ```
 ### FaceDetection
 ```python
+# face_dect_simple.py
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
@@ -132,6 +139,7 @@ cap.release()
 ```
 ### FaceLandmark
 ```python
+# face_simple.py
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
@@ -152,8 +160,9 @@ cv2.destroyAllWindows()
 Face.release()
 cap.release()
 ```
-### MediapipePoseLandmark
+### PoseLandmark
 ```python
+# pose_simple.py
 import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
