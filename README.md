@@ -7,8 +7,9 @@
 ---
 ## specification of mediapipe and our mediapipe class
 - [PoseLandmark](docs/PoseLandmark.md)
-- [HandLandmark](docs/HandLandmark.md)
-- [HandGestureRecognition](docs/HandGestureRecognition.md)
+- [Hands](docs/HandLandmark_and_GestureRecognition.md)
+    - [HandLandmark](docs/HandLandmark_and_GestureRecognition.md#MediapipeHandLandmark)
+    - [HandGestureRecognition](docs/HandLandmark_and_GestureRecognition.md#mediapipehandgesturerecognition)
 - [FaceLandmark](docs/FaceLandmark.md)
 - [FaceDetection](docs/FaceDetection.md)
 - [ObjectDetecion](docs/ObjectDetection.md)
