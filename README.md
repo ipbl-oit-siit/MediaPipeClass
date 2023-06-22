@@ -2,6 +2,8 @@
 - <mediapipe 0.10.0.0> or later
 - [MediaPipe Examples](https://developers.google.com/mediapipe/solutions/examples)
 
+<image src="image/mediapipe.jpg" width=50%>
+
 ---
 ## specification of mediapipe and our mediapipe class
 - [PoseLandmark](docs/PoseLandmark.md)
