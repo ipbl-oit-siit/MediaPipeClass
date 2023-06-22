@@ -1,9 +1,5 @@
 # jinno
-myfacelmk.py
-myhands.py
-myhands_ges.py
-myhands_game.py
-mypose.py
+my*.py
 models/
 pip/
 
