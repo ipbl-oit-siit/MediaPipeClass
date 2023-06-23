@@ -1,7 +1,8 @@
 # jinno
-my*.py
+/my*.py
 models/
 pip/
+sample/Me*.py
 
 
 # Byte-compiled / optimized / DLL files

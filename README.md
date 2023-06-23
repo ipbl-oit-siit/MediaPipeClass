@@ -20,14 +20,14 @@
 |**image to use**|frame|flipped_frame|flipped_frame|flipped_frame|flipped_frame|either|either|
 |**`num_detected_*`**|o|o|o|o|o|o|-|
 |**`num_landmarks`**|o|o|o|o|o|-|-|
-|**coordinate data**|get_landmarks|get_landmarks|get_landmarks|get_landmarks|get_landmarks|get_bounding_box|-|
+|**coordinate data**|get_landmarks|get_landmarks|get_landmarks<br>get_bounding_box|get_landmarks|get_landmarks|get_bounding_box|-|
 |**optional**|`segmentation_mask`|`handedness`|`handedness`<br>`gesture_name`|-|-|`category_name`|`segmentation_mask`<br>`confidence_mask`|
 
 ---
 ## how to use
 1. The following is a simple description of use of our class. Let's try to run them.
 1. Next, go to the following page, which outlines the detailed usage of each of them, and execute them all.
-    1. :o:[HOW2USE(more)](docs/how2use_more.md)
+    1. :o:[HOW2USE(more)](docs/how2use_more.md) :arrow_left: `Next`
 
 ### PoseLandmark
 ```python
