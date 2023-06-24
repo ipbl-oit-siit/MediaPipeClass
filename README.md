@@ -24,12 +24,13 @@
 |**optional**|`segmentation_mask`|`handedness`|`handedness`<br>`gesture_name`|-|-|`category_name`|`segmentation_mask`<br>`confidence_mask`|
 
 ---
-## how to use
+## :red_square: how to use
 1. The following is a simple description of use of our class. Let's try to run them.
+    1. **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
 1. Next, go to the following page, which outlines the detailed usage of each of them, and execute them all.
     1. :o:[HOW2USE(more)](docs/how2use_more.md) :arrow_left: `Next`
 
-### PoseLandmark
+### :o: PoseLandmark
 ```python
 # mypose_simple.py
 import os
@@ -53,7 +54,7 @@ cv2.destroyAllWindows()
 Pose.release()
 cap.release()
 ```
-### HandLandmark
+### :o: HandLandmark
 ```python
 # myhand_simple.py
 import os
@@ -77,7 +78,7 @@ cv2.destroyAllWindows()
 Hand.release()
 cap.release()
 ```
-### HandGestureRecognition
+### :o: HandGestureRecognition
 ```python
 # myhand_ges_simple.py
 import os
@@ -102,7 +103,7 @@ cv2.destroyAllWindows()
 HandGes.release()
 cap.release()
 ```
-### FaceLandmark
+### :o: FaceLandmark
 ```python
 # myface_simple.py
 import os
@@ -125,7 +126,7 @@ cv2.destroyAllWindows()
 Face.release()
 cap.release()
 ```
-### FaceDetection
+### :o: FaceDetection
 ```python
 # myface_dtc_simple.py
 import os
@@ -148,7 +149,7 @@ cv2.destroyAllWindows()
 Face.release()
 cap.release()
 ```
-### ObjectDetection
+### :o: ObjectDetection
 ```python
 # myobj_simple.py
 import os
@@ -171,7 +172,7 @@ cv2.destroyAllWindows()
 Obj.release()
 cap.release()
 ```
-### ImageSegmentation
+### :o: ImageSegmentation
 ```python
 # myseg_simple.py
 import os
