@@ -24,7 +24,7 @@
 |**optional**|`segmentation_mask`|`handedness`|`handedness`<br>`gesture_name`|-|-|`category_name`|`segmentation_mask`<br>`confidence_mask`|
 
 ---
-## :red_square: how to use
+## :red_square: how to use (:exclamation:Learning Tasks:exclamation:)
 1. The following is a simple description of use of our class. Let's try to run them.
     1. **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
 1. Next, go to the following page, which outlines the detailed usage of each of them, and execute them all.
