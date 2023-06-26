@@ -57,7 +57,7 @@
     - `id_landmark`: ID number of the face landmark you want to get landmark coordinate
   - return values
     - `np.array([x, y, z])`: array of the coordinate
-      - `x`: normalized x-coordinate, `y`: normallized y-coordinate, `z`: normallized z-coordinate
+      - `x`: x-coordinate, `y`: y-coordinate, `z`: z-coordinate
       - Value Range: `x:0-width`, `y:0-height`, `z:0-width`
 - `annotated_image = visualize( image )`
   - `annotated_image`: Image with face landmarks for all detected faces on the input image
