@@ -115,7 +115,7 @@
     cv2.imshow(wname, flipped_frame)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - HandLandmark
     - [myhand.py](../sample/myhand.py)
 - PoseLandmark
@@ -125,9 +125,18 @@
     - [myface.py](../sample/myface.py)<br>
     <image src="../image/myface.jpg" width=20%>
 
+### :red_square: How to assign id (`id_hand`) by MediaPipe
+- MediaPipe assigns the same id to each hand in the order in which it is found, until it is lost.
+- :exclamation: Note that if a hand with an earlier id is lost when multiple hands are recognized, the id will be shifted.
+    - For example, with the right hand (id=0) and the left hand (id=1) recognized, if the right hand is hidden, the id of the left hand becomes 0.<br>
+    <image src="../image/myhand_id_1.jpg" width=25%> <image src="../image/myhand_id_2.jpg" width=25%> <image src="../image/myhand_id_3.jpg" width=25%><br>
+
+#### :white_square_button: Samples
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+- [myhand_id.py](../sample/myhand_id.py)
 
 ### :red_square: How to refer only to specific landmarks
-#### :white_square_button: on HandLandmarker
+#### :white_square_button: on `HandLandmarker`
 - :o: [Sample1] How to show only TIP of index finger<br>
     <image src="../image/myhand_tip_indexfinger.jpg" width=25%>
     ```python
@@ -172,7 +181,7 @@
                 cv2.circle(image, landmark_point[:2], 1, (0, 0, 255), 2) # draw landmark
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - HandLandmark
     - [myhand_specific_lmk.py](../sample/myhand_specific_lmk.py)<br>
     <image src="../image/myhand_specific_lmk.jpg" width=20%>
@@ -184,7 +193,7 @@
     <image src="../image/myface_specific_lmk.jpg" width=20%>
 
 ### :red_square: How to calcurate center of gravity (cog) of specific landmarks
-#### :white_square_button: on HandLandmarker
+#### :white_square_button: on `HandLandmarker`
 <image src="../image/myhand_cog_of_tip.jpg" width=25%><br>
 ```python
 # center of gravity
@@ -198,7 +207,7 @@ def draw_cog_point_of_all_tips(image, Hand):
         cv2.circle(image, pt_cog[:2], 5, (0, 0, 255), 2) # draw landmark
 ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - HandLandmark
     - [myhand_center_of_gravity.py](../sample/myhand_center_of_gravity.py)
 - PoseLandmark
@@ -210,7 +219,7 @@ def draw_cog_point_of_all_tips(image, Hand):
 
 ### :red_square: How to make landmark array
 - If you want to use the all landmark data as an list for all your processing, the following sample will help.
-#### :white_square_button: on HandLandmark
+#### :white_square_button: on `HandLandmark`
 - :o: function sample
     ```python
     def make_hand_landmarks_array(image, Hand):
@@ -268,7 +277,7 @@ def draw_cog_point_of_all_tips(image, Hand):
         cos_theta = np.inner(v1, v2) / (v1_n * v2_n)
         return np.rad2deg(np.arccos(cos_theta))
     ```
-#### :white_square_button: on HandLandmark
+#### :white_square_button: on `HandLandmark`
 - :o:[Sample 1] How to check the open/bend of the index finger<br>
     <image src="../image/myhand_open.jpg" width=25%><image src="../image/myhand_bend.jpg" width=25%><br>
     ```python
@@ -319,7 +328,7 @@ def draw_cog_point_of_all_tips(image, Hand):
             cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - HandLandmark
     - [mypose_calc_angle.py](../sample/myhand_calc_angle.py)
 - PoseLandmark
@@ -362,7 +371,7 @@ def draw_cog_point_of_all_tips(image, Hand):
             cv2.putText(image, org=wrist_point_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=self.FONT_SIZE, color=color, thickness=self.FONT_THICKNESS, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [myhand_handedness.py](../sample/myhand_handedness.py)
 
 ---
@@ -401,7 +410,7 @@ def draw_cog_point_of_all_tips(image, Hand):
             cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [myface_left_right.py](../sample/myhand_left_right.py)
 
 ---
@@ -427,7 +436,7 @@ def draw_cog_point_of_all_tips(image, Hand):
                 cv2.circle(image, tuple(keypoint), 2, (0, 0, 255), 3)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [myface_detection.py](../sample/myface_detection.py)
 
 ---
@@ -533,7 +542,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 - You can binarize the segmentation mask by using a threshold value (e.g. `0.5`).
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [mypose_cog_only_visible.py](../sample/mypose_cog_only_visible.py)
 - [mypose_judge_hand_up.py](../sample/mypose_judge_hand_up.py)
 - [mypose_judge_O_X.py](../sample/mypose_judge_O_X.py)
@@ -566,7 +575,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     face_skin_confidence_mask = Seg.get_confidence_mask(Seg.FACE_SKIN)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [myseg.py](../sample/myseg.py)
 
 ---
@@ -598,5 +607,5 @@ def draw_cog_point_of_all_tips(image, Hand):
     Obj = ObjDtc(score_threshold=0.3)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [myobj.py](../sample/myobj.py)
