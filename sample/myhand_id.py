@@ -44,7 +44,6 @@ def main():
     # you can set options
     Hand = HandLmk()
 
-    cnt = 0
     while cap.isOpened():
         frame_now = get_frame_number(start, fps)
         if frame_now == frame_prv:
@@ -68,10 +67,6 @@ def main():
         cv2.imshow(wname, flipped_frame)
         if cv2.waitKey(5) & 0xFF == ord('q'):
             break
-        if cnt>200:
-            input()
-            cnt=0
-        cnt+=1
 
     cv2.destroyAllWindows()
     Hand.release()
