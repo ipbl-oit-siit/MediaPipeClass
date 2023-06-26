@@ -117,12 +117,12 @@
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
 - HandLandmark
-    - [myhand.py](sample/myhand.py)
+    - [myhand.py](../sample/myhand.py)
 - PoseLandmark
-    - [mypose.py](sample/mypose.py)<br>
+    - [mypose.py](../sample/mypose.py)<br>
     <image src="../image/mypose.jpg" width=20%>
 - FaceLandmark
-    - [myface.py](sample/myface.py)<br>
+    - [myface.py](../sample/myface.py)<br>
     <image src="../image/myface.jpg" width=20%>
 
 
@@ -174,13 +174,13 @@
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
 - HandLandmark
-    - [myhand_specific_lmk.py](sample/myhand_specific_lmk.py)<br>
+    - [myhand_specific_lmk.py](../sample/myhand_specific_lmk.py)<br>
     <image src="../image/myhand_specific_lmk.jpg" width=20%>
 - PoseLandmark
-    - [mypose_specific_lmk.py](sample/mypose_specific_lmk.py)<br>
+    - [mypose_specific_lmk.py](../sample/mypose_specific_lmk.py)<br>
     <image src="../image/mypose_specific_lmk.jpg" width=20%>
 - FaceLandmark
-    - [myface_specifics_lmk.py](sample/myface_specifics_lmk.py)<br>
+    - [myface_specifics_lmk.py](../sample/myface_specifics_lmk.py)<br>
     <image src="../image/myface_specific_lmk.jpg" width=20%>
 
 ### :red_square: How to calcurate center of gravity (cog) of specific landmarks
@@ -200,12 +200,12 @@ def draw_cog_point_of_all_tips(image, Hand):
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
 - HandLandmark
-    - [myhand_center_of_gravity.py](sample/myhand_center_of_gravity.py)
+    - [myhand_center_of_gravity.py](../sample/myhand_center_of_gravity.py)
 - PoseLandmark
-    - [mypose_center_of_gravity.py](sample/mypose_center_of_gravity.py)<br>
+    - [mypose_center_of_gravity.py](../sample/mypose_center_of_gravity.py)<br>
     <image src="../image/mypose_center_of_gravity.jpg" width=20%>
 - FaceLandmark
-    - [myface_center_of_gravity.py](sample/myface_center_of_gravity.py)<br>
+    - [myface_center_of_gravity.py](../sample/myface_center_of_gravity.py)<br>
     <image src="../image/myface_center_of_gravity.jpg" width=20%>
 
 ### :red_square: How to make landmark array
@@ -321,12 +321,12 @@ def draw_cog_point_of_all_tips(image, Hand):
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
 - HandLandmark
-    - [mypose_calc_angle.py](sample/myhand_calc_angle.py)
+    - [mypose_calc_angle.py](../sample/myhand_calc_angle.py)
 - PoseLandmark
-    - [mypose_calc_angle.py](sample/mypose_calc_angle.py)<br>
+    - [mypose_calc_angle.py](../sample/mypose_calc_angle.py)<br>
     <image src="../image/mypose_calc_angle_2lines.jpg" width=20%><image src="../image/mypose_calc_angle_Yaxis.jpg" width=20%>
 - FaceLandmark
-    - [myface_calc_angle_Yaxis.py](sample/myface_calc_angle_Yaxis.py)<br>
+    - [myface_calc_angle_Yaxis.py](../sample/myface_calc_angle_Yaxis.py)<br>
     <image src="../image/myface_calc_angle_Yaxis.jpg" width=20%>
 
 ---
@@ -363,7 +363,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
-- [myhand_handedness.py](sample/myhand_handedness.py)
+- [myhand_handedness.py](../sample/myhand_handedness.py)
 
 ---
 ### :red_square: `FaceLandmark`
@@ -402,7 +402,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
-- [myface_left_right.py](sample/myhand_left_right.py)
+- [myface_left_right.py](../sample/myhand_left_right.py)
 
 ---
 ### :red_square: `FaceDetection`
@@ -428,7 +428,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
-- [myface_detection.py](sample/myface_detection.py)
+- [myface_detection.py](../sample/myface_detection.py)
 
 ---
 ### :red_square: `PoseLandmark`
