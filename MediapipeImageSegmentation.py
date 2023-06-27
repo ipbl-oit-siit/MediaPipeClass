@@ -17,6 +17,7 @@ class MediapipeImageSegmentation():
     model_folder_path = './models'
 
     # skin_type (selfie_multiclass_256x256.tflite)
+    NUM_TYPES = 6
     BACKGROUND = 0
     HAIR = 1
     BODY_SKIN = 2
@@ -72,9 +73,7 @@ class MediapipeImageSegmentation():
 
     def get_normalized_masks(self):
         mask = self.results.category_mask.numpy_view()
-        if np.max(mask) == 0:
-            return mask.astype(np.uint8)
-        return (255.0*mask/np.max(mask)).astype(np.uint8)
+        return (255.0*mask/(self.NUM_TYPES-1)).astype(np.uint8)
 
     def release(self):
         self.segmenter.close()

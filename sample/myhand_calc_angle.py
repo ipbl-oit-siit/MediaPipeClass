@@ -35,9 +35,9 @@ def draw_open_bend_indexfinger(image, Hand):
         vec1 = pt_ifmcp - pt_ifpip # vector (pip -> mcp)
         vec2 = pt_ifdip - pt_ifpip # vector (pip -> dip)
         if calc_angle(vec1, vec2) > 140:
-            txt = 'open.'
+            txt = 'open'
         else:
-            txt = 'bend.'
+            txt = 'bend'
         pt_for_text = (pt_ifmcp[0]+10, pt_ifmcp[1])
         cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
 
