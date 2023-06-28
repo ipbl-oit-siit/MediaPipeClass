@@ -31,7 +31,7 @@
 
 
 ---
-## :red_square: how to use (:exclamation:Learning Tasks:exclamation:)
+## :red_square: how to use
 - The following is a simple description of use of our class. 
     - **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
 
