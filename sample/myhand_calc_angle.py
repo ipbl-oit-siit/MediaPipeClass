@@ -97,7 +97,6 @@ def main():
 
         results = Hand.detect(flipped_frame)
 
-
         draw_open_bend_indexfinger(flipped_frame, Hand)
 
         # draw_finger_angle_against_Y_axis(flipped_frame, Hand)

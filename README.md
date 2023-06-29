@@ -34,31 +34,10 @@
 - The following is a simple description of use of our class.
     - **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
         - [MediaPipeClass.zip](./MediaPipeClass.zip)
-### :o: PoseLandmark
-```python
-# mypose_simple.py
-import os
-os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
-import cv2
-from MediapipePoseLandmark import MediapipePoseLandmark as PoseLmk
-
-cap = cv2.VideoCapture(0)
-Pose = PoseLmk()
-while cap.isOpened():
-    ret, frame = cap.read()
-    Pose.detect(frame)
-    masks = Pose.get_all_segmentation_masks()
-    masked_frame = Pose.visualize_mask(frame, masks)
-    annotated_frame = Pose.visualize(masked_frame)
-    cv2.imshow('frame', annotated_frame)
-    key = cv2.waitKey(1)&0xFF
-    if key == ord('q'):
-        break
-cv2.destroyAllWindows()
-Pose.release()
-cap.release()
-```
+    - Create a new python file, copy and paste the following sample code run it.
 ### :o: HandLandmark
+- draw hand landmarks and handedness, and print the number of detected hands<br>
+    <image src="image/myhand_simple.jpg" width=25% height=25%>
 ```python
 # myhand_simple.py
 import os
@@ -83,6 +62,9 @@ Hand.release()
 cap.release()
 ```
 ### :o: HandGestureRecognition
+- draw hand landmarks and handedness, and print gesture name and its score
+    - recognizable gesture: `None`, `Closed_Fist`, `Open_Plam`, `Pointing_up`, `Thumb_Down`, `Thumb_Up`, `Victory`, `ILoveYou`<br>
+    <image src="image/myhand_ges_simple.jpg" width=25% height=25%>
 ```python
 # myhand_ges_simple.py
 import os
@@ -107,7 +89,35 @@ cv2.destroyAllWindows()
 HandGes.release()
 cap.release()
 ```
+### :o: PoseLandmark
+- draw pose landmarks and segmentation mask on image<br>
+    <image src="image/mypose_simple.jpg" width=25% height=25%>
+```python
+# mypose_simple.py
+import os
+os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
+import cv2
+from MediapipePoseLandmark import MediapipePoseLandmark as PoseLmk
+
+cap = cv2.VideoCapture(0)
+Pose = PoseLmk()
+while cap.isOpened():
+    ret, frame = cap.read()
+    Pose.detect(frame)
+    masks = Pose.get_all_segmentation_masks()
+    masked_frame = Pose.visualize_mask(frame, masks)
+    annotated_frame = Pose.visualize(masked_frame)
+    cv2.imshow('frame', annotated_frame)
+    key = cv2.waitKey(1)&0xFF
+    if key == ord('q'):
+        break
+cv2.destroyAllWindows()
+Pose.release()
+cap.release()
+```
 ### :o: FaceLandmark
+- draw face landmarks<br>
+    <image src="image/myface_simple.jpg" width=25% height=25%>
 ```python
 # myface_simple.py
 import os
@@ -131,6 +141,8 @@ Face.release()
 cap.release()
 ```
 ### :o: FaceDetection
+- draw face bounding box, face keypoints, and detection score<br>
+    <image src="image/myface_dtc_simple.jpg" width=25% height=25%>
 ```python
 # myface_dtc_simple.py
 import os
@@ -154,6 +166,8 @@ Face.release()
 cap.release()
 ```
 ### :o: ObjectDetection
+- draw the all object's bounding box, object name and detection score, and print the number of detected objects<br>
+    <image src="image/myobj_simple.jpg" width=25% height=25%>
 ```python
 # myobj_simple.py
 import os
@@ -177,6 +191,9 @@ Obj.release()
 cap.release()
 ```
 ### :o: ImageSegmentation
+- draw normalized segmentation masks, face skin mask, input image
+    - dark blue:`background`, blue: `hair`, light blue: `body_skin`, yellow: `face_skin`, orange: `clothes`, red: `others`<br>
+    <image src="image/myseg_simple.jpg" width=75%>
 ```python
 # myseg_simple.py
 import os

@@ -2,7 +2,6 @@
 
 [back to the top page of MEdiaPipe Class](../README.md)
 
-
 ---
 ## :green_square: How to use landmarks
 - `HandLandmark`, `FaceLandmark`, `PoseLandmark` detect landmarks.
@@ -27,8 +26,9 @@
     - `presence = Hand.get_landmark_presence(id_hand, id_landmark)`: The presence of `id_landmark`-th landmark of `id_hand`-th hand. If low, the validity is low.
     - `visibility = Hand.get_landmark_visibility(id_hand, id_landmark)`: The presence of `id_landmark`-th landmark of `id_hand`{hands, faces, poses}-th hand. If low, the validity is low.
 - For other details, please refer to each specification page.
-    - [HandLandmark](HandLandmark.md)
-    - [HandGestureRecognition](HandGestureRecognition.md)
+    - [Hands](docs/HandLandmark_and_GestureRecognition.md)
+        - [HandLandmark](docs/HandLandmark_and_GestureRecognition.md#MediapipeHandLandmark)
+        - [HandGestureRecognition](docs/HandLandmark_and_GestureRecognition.md#mediapipehandgesturerecognition)
     - [FaceLandmark](FaceLandmark.md)
     - [PoseLandmark](PoseLandmark.md)
 
@@ -189,7 +189,7 @@
     - [mypose_specific_lmk.py](../sample/mypose_specific_lmk.py)<br>
     <image src="../image/mypose_specific_lmk.jpg" width=20%>
 - FaceLandmark
-    - [myface_specifics_lmk.py](../sample/myface_specifics_lmk.py)<br>
+    - [myface_specific_lmk.py](../sample/myface_specific_lmk.py)<br>
     <image src="../image/myface_specific_lmk.jpg" width=20%>
 
 ### :red_square: How to calcurate center of gravity (cog) of specific landmarks
@@ -374,70 +374,34 @@ def draw_cog_point_of_all_tips(image, Hand):
 **:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [myhand_handedness.py](../sample/myhand_handedness.py)
 
----
-### :red_square: `FaceLandmark`
-- The following is sample to determine `left` or `right` according to the orientation of the face.
-- There are several judgment methods, but the simple one is a judgment method that compares the x-coordinates of several landmarks.<br>
-    <image src="../image/myface_left_right.jpg" width="25%" height="25%"><br>
-#### :o:[Sample]Determine `left` or `right` orientation of the face
-- sample function
+### :red_square: `HandGestureRecognition`
+- `HandGestureRecognition` can recognize what gesture is being made with hand.
+
+|index|gesture_name (label)|explain|
+|-|-|-|
+|0|None|Unrecognized gesture (Unknown)|
+|1|Closed_Fist|Closed fist|
+|2|Open_Palm|Open palm|
+|3|Pointing_Up|Pointing up|
+|4|Thumb_Down|Thumbs down|
+|5|Thumb_Up|Thumbs up|
+|6|Victory|Victory|
+|7|ILoveYou|Love|
+
+#### :o:[Sample] Draw the hand gesture name (label)
+<image src="../image/myhand_gesture.jpg" width=25%><br>
+- sample code
     ```python
-    def draw_left_right_with_face(image, Face):
-        for id_face in range(Face.num_detected_faces):
-            # facial keypoints
-            pt_top = Face.get_landmark(id_face, 10)
-            pt_bottom = Face.get_landmark(id_face, 152)
-            pt_left = Face.get_landmark(id_face, 234)
-            pt_right = Face.get_landmark(id_face, 454)
-            pt_center = Face.get_landmark(id_face, 0)
-
-            # center of gravity
-            pt_cog = np.zeros((3,), dtype=int)
-            for id_lmk in range(Face.num_landmarks):
-                pt_cog += Face.get_landmark(id_face, id_lmk)
-            pt_cog = (pt_cog/Face.num_landmarks).astype(int)
-
-            l = pt_cog[0] - pt_left[0]
-            r = pt_right[0] - pt_cog[0]
-
-            if abs(l) > 5*abs(r):
-                txt = 'right'
-            elif 5*abs(l) < abs(r):
-                txt = 'left'
-            else:
-                txt = ''
-            pt_for_text = (pt_top[0]+10, pt_top[1])
+    def draw_gesture_name(image, Hand):
+        for id_hand in range(Hand.num_detected_hands):
+            txt = Hand.get_gesture(id_hand)
+            pt_wrist = Hand.get_landmark(id_hand, Hand.WRIST)
+            pt_for_text = (pt_wrist[0]+10, pt_wrist[1]+30)
             cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
-- [myface_left_right.py](../sample/myhand_left_right.py)
-
----
-### :red_square: `FaceDetection`
-- `FaceDetection` detects all faces in the input image and returns the 2d coordinates of the main key points.<br>
-    <image src="../image/myface_detection.jpg" width="25%" height="25%"><br>
-    - keypoints
-        - `LEFT_EYE = 0`
-        - `RIGHT_EYE = 1`
-        - `NOSE_TIP = 2`
-        - `MOUTH = 3`
-        - `LEFT_EYE_TRAGION = 4`
-        - `RIGHT_EYE_TRAGION = 5`
-#### :o:[Sample]Show all keypoint and bounding box
-- sample function
-    ```python
-    def draw_face_keypoints_boundingbox(image, FaceDtc):
-        for id_face in range(FaceDtc.num_detected_faces):
-            bx, by, bw, bh = FaceDtc.get_bounding_box(id_face)
-            cv2.rectangle(image, (bx, by), (bx+bw, by+bh), (0,255,0), 2)
-            for id_keypoint in range(FaceDtc.num_landmarks):
-                keypoint = FaceDtc.get_landmark(id_face, id_keypoint)
-                cv2.circle(image, tuple(keypoint), 2, (0, 0, 255), 3)
-    ```
-#### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
-- [myface_detection.py](../sample/myface_detection.py)
+- [myhand_gesture.py](../sample/myhand_gesture.py)
 
 ---
 ### :red_square: `PoseLandmark`
@@ -549,34 +513,69 @@ def draw_cog_point_of_all_tips(image, Hand):
 - [mypose_segmentation.py](../sample/mypose_segmentation.py)
 
 ---
-### :red_square: `ImageSegmentation`
-- `ImageSegmentation` returns the segmentation mask. Its pixel value represents the corresponding segmentation ID.
-- In the `selfie_multiclass_256x256.tflite` model, it is as follows.
-    - `BACKGROUND = 0`
-    - `HAIR = 1`
-    - `BODY_SKIN = 2`
-    - `FACE_SKIN = 3`
-    - `CLOTHES = 4`
-    - `OTHERS = 5`<br>
-<image src="../image/myseg.jpg" width=50% height=50%>
-#### :o:[Sample] Show segmentation mask for selfie
-- sample code
+### :red_square: `FaceLandmark`
+- The following is sample to determine `left` or `right` according to the orientation of the face.
+- There are several judgment methods, but the simple one is a judgment method that compares the x-coordinates of several landmarks.<br>
+    <image src="../image/myface_left_right.jpg" width="25%" height="25%"><br>
+#### :o:[Sample]Determine `left` or `right` orientation of the face
+- sample function
     ```python
-    segmented_masks = Seg.get_segmentation_masks()
-    # face skin pixels have 'True', others have 'False')
-    face_skin_mask_binary = (segmented_masks == Seg.FACE_SKIN)
+    def draw_left_right_with_face(image, Face):
+        for id_face in range(Face.num_detected_faces):
+            # facial keypoints
+            pt_top = Face.get_landmark(id_face, 10)
+            pt_bottom = Face.get_landmark(id_face, 152)
+            pt_left = Face.get_landmark(id_face, 234)
+            pt_right = Face.get_landmark(id_face, 454)
+            pt_center = Face.get_landmark(id_face, 0)
 
-    # getter (face skin pixels have '255', others have '0')
-    face_skin_mask = Seg.get_segmentation_mask(Seg.FACE_SKIN)
-    ```
-- You can get the confidence for the segmentation mask of each segmentation ID as a mask.
-    ```python
-    # Range [0.0, 1.0]
-    face_skin_confidence_mask = Seg.get_confidence_mask(Seg.FACE_SKIN)
+            # center of gravity
+            pt_cog = np.zeros((3,), dtype=int)
+            for id_lmk in range(Face.num_landmarks):
+                pt_cog += Face.get_landmark(id_face, id_lmk)
+            pt_cog = (pt_cog/Face.num_landmarks).astype(int)
+
+            l = pt_cog[0] - pt_left[0]
+            r = pt_right[0] - pt_cog[0]
+
+            if abs(l) > 5*abs(r):
+                txt = 'right'
+            elif 5*abs(l) < abs(r):
+                txt = 'left'
+            else:
+                txt = ''
+            pt_for_text = (pt_top[0]+10, pt_top[1])
+            cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
-- [myseg.py](../sample/myseg.py)
+- [myface_left_right.py](../sample/myface_left_right.py)
+
+---
+### :red_square: `FaceDetection`
+- `FaceDetection` detects all faces in the input image and returns the 2d coordinates of the main key points.<br>
+    <image src="../image/myface_detection.jpg" width="25%" height="25%"><br>
+    - keypoints
+        - `LEFT_EYE = 0`
+        - `RIGHT_EYE = 1`
+        - `NOSE_TIP = 2`
+        - `MOUTH = 3`
+        - `LEFT_EYE_TRAGION = 4`
+        - `RIGHT_EYE_TRAGION = 5`
+#### :o:[Sample]Show all keypoint and bounding box
+- sample function
+    ```python
+    def draw_face_keypoints_boundingbox(image, FaceDtc):
+        for id_face in range(FaceDtc.num_detected_faces):
+            bx, by, bw, bh = FaceDtc.get_bounding_box(id_face)
+            cv2.rectangle(image, (bx, by), (bx+bw, by+bh), (0,255,0), 2)
+            for id_keypoint in range(FaceDtc.num_landmarks):
+                keypoint = FaceDtc.get_landmark(id_face, id_keypoint)
+                cv2.circle(image, tuple(keypoint), 2, (0, 0, 255), 3)
+    ```
+#### :white_square_button: Samples
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+- [myface_detection.py](../sample/myface_detection.py)
 
 ---
 ### :red_square: `ObjectDetection`
@@ -609,3 +608,33 @@ def draw_cog_point_of_all_tips(image, Hand):
 #### :white_square_button: Samples
 **:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
 - [myobj.py](../sample/myobj.py)
+
+---
+### :red_square: `ImageSegmentation`
+- `ImageSegmentation` returns the segmentation mask. Its pixel value represents the corresponding segmentation ID.
+- In the `selfie_multiclass_256x256.tflite` model, it is as follows.
+    - `BACKGROUND = 0`
+    - `HAIR = 1`
+    - `BODY_SKIN = 2`
+    - `FACE_SKIN = 3`
+    - `CLOTHES = 4`
+    - `OTHERS = 5`<br>
+<image src="../image/myseg.jpg" width=50% height=50%>
+#### :o:[Sample] Show segmentation mask for selfie
+- sample code
+    ```python
+    segmented_masks = Seg.get_segmentation_masks()
+    # face skin pixels have 'True', others have 'False')
+    face_skin_mask_binary = (segmented_masks == Seg.FACE_SKIN)
+
+    # getter (face skin pixels have '255', others have '0')
+    face_skin_mask = Seg.get_segmentation_mask(Seg.FACE_SKIN)
+    ```
+- You can get the confidence for the segmentation mask of each segmentation ID as a mask.
+    ```python
+    # Range [0.0, 1.0]
+    face_skin_confidence_mask = Seg.get_confidence_mask(Seg.FACE_SKIN)
+    ```
+#### :white_square_button: Samples
+**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+- [myseg.py](../sample/myseg.py)
