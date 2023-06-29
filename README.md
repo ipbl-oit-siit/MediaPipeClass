@@ -34,7 +34,7 @@
 - The following is a simple description of use of our class.
     - **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
         - [MediaPipeClass.zip](./MediaPipeClass.zip)
-    - Create a new python file, copy and paste the following sample code run it.
+    - Create a new python file in the same directory as `our Mediapipe Class file`, copy and paste the following sample code, and run it.
 ### :o: HandLandmark
 - draw hand landmarks and handedness, and print the number of detected hands<br>
     <image src="image/myhand_simple.jpg" width=25% height=25%>

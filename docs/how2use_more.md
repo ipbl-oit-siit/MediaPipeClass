@@ -26,9 +26,9 @@
     - `presence = Hand.get_landmark_presence(id_hand, id_landmark)`: The presence of `id_landmark`-th landmark of `id_hand`-th hand. If low, the validity is low.
     - `visibility = Hand.get_landmark_visibility(id_hand, id_landmark)`: The presence of `id_landmark`-th landmark of `id_hand`{hands, faces, poses}-th hand. If low, the validity is low.
 - For other details, please refer to each specification page.
-    - [Hands](docs/HandLandmark_and_GestureRecognition.md)
-        - [HandLandmark](docs/HandLandmark_and_GestureRecognition.md#MediapipeHandLandmark)
-        - [HandGestureRecognition](docs/HandLandmark_and_GestureRecognition.md#mediapipehandgesturerecognition)
+    - [Hands](HandLandmark_and_GestureRecognition.md)
+        - [HandLandmark](HandLandmark_and_GestureRecognition.md#MediapipeHandLandmark)
+        - [HandGestureRecognition](HandLandmark_and_GestureRecognition.md#mediapipehandgesturerecognition)
     - [FaceLandmark](FaceLandmark.md)
     - [PoseLandmark](PoseLandmark.md)
 
