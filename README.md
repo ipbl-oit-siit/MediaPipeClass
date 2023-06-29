@@ -29,12 +29,11 @@
 1. Next, go to the following page, which outlines the detailed usage of each of them, and execute them all.
     1. :o:[HOW2USE(more)](docs/how2use_more.md) :arrow_left: `Next`
 
-
 ---
 ## :red_square: how to use
-- The following is a simple description of use of our class. 
+- The following is a simple description of use of our class.
     - **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
-
+        - [MediaPipeClass.zip](./MediaPipeClass.zip)
 ### :o: PoseLandmark
 ```python
 # mypose_simple.py
