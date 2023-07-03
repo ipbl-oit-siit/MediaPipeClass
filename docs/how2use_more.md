@@ -338,7 +338,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     - [myface_calc_angle_Yaxis.py](../sample/myface_calc_angle_Yaxis.py)<br>
     <image src="../image/myface_calc_angle_Yaxis.jpg" width=20%>
 
----
+
 ---
 ## :green_square: Original contents of each class
 ### :red_square: `HandLandmark`
