@@ -115,7 +115,7 @@
     cv2.imshow(wname, flipped_frame)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
     - [myhand.py](../sample/myhand.py)
 - PoseLandmark
@@ -132,7 +132,7 @@
     <image src="../image/myhand_id_1.jpg" width=25%> <image src="../image/myhand_id_2.jpg" width=25%> <image src="../image/myhand_id_3.jpg" width=25%><br>
 
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [myhand_id.py](../sample/myhand_id.py)
 
 ### :red_square: How to refer only to specific landmarks
@@ -181,7 +181,7 @@
                 cv2.circle(image, landmark_point[:2], 1, (0, 0, 255), 2) # draw landmark
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
     - [myhand_specific_lmk.py](../sample/myhand_specific_lmk.py)<br>
     <image src="../image/myhand_specific_lmk.jpg" width=20%>
@@ -207,7 +207,7 @@ def draw_cog_point_of_all_tips(image, Hand):
         cv2.circle(image, pt_cog[:2], 5, (0, 0, 255), 2) # draw landmark
 ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
     - [myhand_center_of_gravity.py](../sample/myhand_center_of_gravity.py)
 - PoseLandmark
@@ -328,7 +328,7 @@ def draw_cog_point_of_all_tips(image, Hand):
             cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
     - [mypose_calc_angle.py](../sample/myhand_calc_angle.py)
 - PoseLandmark
@@ -371,7 +371,7 @@ def draw_cog_point_of_all_tips(image, Hand):
             cv2.putText(image, org=wrist_point_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=self.FONT_SIZE, color=color, thickness=self.FONT_THICKNESS, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [myhand_handedness.py](../sample/myhand_handedness.py)
 
 ### :red_square: `HandGestureRecognition`
@@ -400,7 +400,7 @@ def draw_cog_point_of_all_tips(image, Hand):
             cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [myhand_gesture.py](../sample/myhand_gesture.py)
 
 ---
@@ -506,7 +506,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 - You can binarize the segmentation mask by using a threshold value (e.g. `0.5`).
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [mypose_cog_only_visible.py](../sample/mypose_cog_only_visible.py)
 - [mypose_judge_hand_up.py](../sample/mypose_judge_hand_up.py)
 - [mypose_judge_O_X.py](../sample/mypose_judge_O_X.py)
@@ -548,7 +548,7 @@ def draw_cog_point_of_all_tips(image, Hand):
             cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [myface_left_right.py](../sample/myface_left_right.py)
 
 ---
@@ -574,7 +574,7 @@ def draw_cog_point_of_all_tips(image, Hand):
                 cv2.circle(image, tuple(keypoint), 2, (0, 0, 255), 3)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [myface_detection.py](../sample/myface_detection.py)
 
 ---
@@ -582,6 +582,7 @@ def draw_cog_point_of_all_tips(image, Hand):
 - `ObjectDetection` returns the category name and bounding box of the detected object.
     - [target object list](https://storage.googleapis.com/mediapipe-tasks/object_detector/labelmap.txt)<br>
 <image src="../image/myobj.jpg" width=25% height=25%>
+
 #### :o:[Sample] Show object's name and bounding box
 - sample code
     ```python
@@ -606,7 +607,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     Obj = ObjDtc(score_threshold=0.3)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [myobj.py](../sample/myobj.py)
 
 ---
@@ -620,6 +621,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     - `CLOTHES = 4`
     - `OTHERS = 5`<br>
 <image src="../image/myseg.jpg" width=50% height=50%>
+
 #### :o:[Sample] Show segmentation mask for selfie
 - sample code
     ```python
@@ -636,5 +638,5 @@ def draw_cog_point_of_all_tips(image, Hand):
     face_skin_confidence_mask = Seg.get_confidence_mask(Seg.FACE_SKIN)
     ```
 #### :white_square_button: Samples
-**:exclamation: Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.**
+> **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - [myseg.py](../sample/myseg.py)
