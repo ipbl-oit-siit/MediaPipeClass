@@ -242,13 +242,13 @@ def draw_cog_point_of_all_tips(image, Hand):
 
     for hand in hand_landmarks: # all hands
         for landmark in hand: # all landmarks
-            cv2.circle(flipped_frame, tuple(landmark[:2]), 1, (0, 0, 255), 2)
+            cv2.circle(flipped_frame, landmark[:2], 1, (0, 0, 255), 2)
 
     id_list_tip = [4, 8, 12, 16, 20]
     for hand in hand_landmarks: # all hands
         for index, landmark in enumerate(hand): # all landmarks
             if index in id_list_tip: # only TIP landmarks
-                cv2.circle(flipped_frame, tuple(landmark[:2]), 1, (0, 0, 255), 2)
+                cv2.circle(flipped_frame, landmark[:2], 1, (0, 0, 255), 2)
     ```
     ```python
     # getter --------------------------------------------
@@ -259,13 +259,13 @@ def draw_cog_point_of_all_tips(image, Hand):
     for id_hand in range(Hand.num_detected_hands): # all hands
         for id_lmk in range(Hand.num_landmarks): # all landmarks
             landmark_point = Hand.get_landmark(id_hand, id_lmk) # get landmark
-            cv2.circle(image, tuple(landmark_point[:2]), 1, (0, 0, 255), 2) # draw landmark
+            cv2.circle(image, landmark_point[:2], 1, (0, 0, 255), 2) # draw landmark
 
     id_list_tip = [4, 8, 12, 16, 20]
     for id_hand in range(Hand.num_detected_hands): # all hands
         for id_lmk in id_list_tip: # only TIP landmarks
             landmark_point = Hand.get_landmark(id_hand, id_lmk) # get landmark
-            cv2.circle(image, tuple(landmark_point[:2]), 1, (0, 0, 255), 2) # draw landmark
+            cv2.circle(image, landmark_point[:2], 1, (0, 0, 255), 2) # draw landmark
     ```
 
 ### :red_square: How to calculate the angle between 2 vectors
