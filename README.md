@@ -22,7 +22,7 @@
 |**image to use**|frame|flipped_frame|flipped_frame|flipped_frame|flipped_frame|either|either|
 |**`num_detected_*`**|o|o|o|o|o|o|-|
 |**`num_landmarks`**|o|o|o|o|o|-|-|
-|**coordinate data**|get_landmarks|get_landmarks|get_landmarks<br>get_bounding_box|get_landmarks|get_landmarks|get_bounding_box|-|
+|**coordinate data**|get_landmarks|get_landmarks|get_landmarks|get_landmarks|get_landmarks<br>get_bounding_box|get_bounding_box|-|
 |**optional**|`segmentation_mask`|`handedness`|`handedness`<br>`gesture_name`|-|-|`category_name`|`segmentation_mask`<br>`confidence_mask`|
 
 ---
