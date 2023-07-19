@@ -316,26 +316,25 @@ def draw_cog_point_of_all_tips(image, Hand):
         for id_hand in range(Hand.num_detected_hands):
             pt_iftip = Hand.get_landmark(id_hand, Hand.INDEX_FINGER_TIP)
             pt_ifpip = Hand.get_landmark(id_hand, Hand.INDEX_FINGER_PIP)
-
+    
             # draw index finger (PIP - TIP)
             cv2.circle(image, pt_ifpip[:2], 5, (0, 0, 255), 3)
             cv2.circle(image, pt_iftip[:2], 5, (0, 0, 255), 3)
             cv2.line(image, pt_ifpip[:2], pt_iftip[:2], (0, 255, 0))
-
-            vec1 = pt_pip - pt_mcp # 3d vector (pip -> mcp)
+    
+            vec1 = pt_iftip - pt_ifpip # 3d vector (tip -> pip)
             vec2 = (0, -1) # 2d vector (vertical upward direction)
             angle = calc_angle(vec1[:2], vec2) # vec1 has 3-dimension
-            if pt_tip[0] - pt_pip[0] < 0:
+            if pt_iftip[0] - pt_ifpip[0] < 0:
                 angle = 360 - angle
-
             txt = '{:d}'.format(int(angle))
-            pt_for_text = (pt_ifmcp[0]+10, pt_ifmcp[1])
+            pt_for_text = (pt_iftip[0]+10, pt_iftip[1])
             cv2.putText(image, org=pt_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
-    - [mypose_calc_angle.py](../sample/myhand_calc_angle.py)
+    - [myhand_calc_angle.py](../sample/myhand_calc_angle.py)
 - PoseLandmark
     - [mypose_calc_angle.py](../sample/mypose_calc_angle.py)<br>
     <image src="../image/mypose_calc_angle_2lines.jpg" width=20%><image src="../image/mypose_calc_angle_Yaxis.jpg" width=20%>
