@@ -8,9 +8,7 @@
     - `HandLandmark`: 21 points<br>
     <image src="https://developers.google.com/static/mediapipe/images/solutions/hand-landmarks.png" width="50%" height="50%"><br>
     - `FaceLandmark`: 478 points<br>
-    <image src="https://developers.google.com/static/mediapipe/images/solutions/face_landmarker_keypoints.png" width="20%" height="20%">
-    <image src="https://user-images.githubusercontent.com/48384506/113843509-dfcd3680-97a8-11eb-8fd5-e16bf48a113b.png" width="25%" height="25%">
-    <br>
+    <image src="https://developers.google.com/static/mediapipe/images/solutions/face_landmarker_keypoints.png" width="20%" height="20%"><image src="https://user-images.githubusercontent.com/48384506/113843509-dfcd3680-97a8-11eb-8fd5-e16bf48a113b.png" width="25%" height="25%"><br>
     - `PoseLandmark`: 33 points<br>
     <image src="https://developers.google.com/static/mediapipe/images/solutions/pose_landmarks_index.png" width="20%" height="20%"><br>
 - The following is some examples of how to refer landmarks.
