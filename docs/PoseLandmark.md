@@ -55,7 +55,7 @@
     - `id_landmark`: ID number of the pose landmark you want to get landmark coordinate
   - return values
     - `np.array([x, y, z])`: array of the coordinate
-      - `x`: normalized x-coordinate, `y`: normallized y-coordinate, `z`: normallized z-coordinate
+      - `x`: x-coordinate, `y`: y-coordinate, `z`: z-coordinate
       - Value Range: `x:0-width`, `y:0-height`, `z:0-width`
 - `visibility_score = get_landmark_visibility( id_pose, id_landmark )`
   - If this score is low, you should not use its landmark.
