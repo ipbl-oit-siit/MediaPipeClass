@@ -36,7 +36,6 @@
 - `detect( image )`
   - arguments
     - `image`: Input image (readed by cv2)
-      - Input image is a frame image flipped holizontal! Otherwise, left hand and right hand are reversed.
   - return values
     - `results`: Probably not necessary
 - `get_normalized_landmark( id_hand, id_landmark )`
@@ -75,10 +74,9 @@ cap = cv2.VideoCapture(0)
 Hand = HandLmk()
 while cap.isOpened():
     ret, frame = cap.read()
-    flipped_frame = cv2.flip(frame, 1)
-    Hand.detect(flipped_frame)
+    Hand.detect(frame)
     print(Hand.num_detected_hands)
-    annotated_frame = Hand.visualize(flipped_frame)
+    annotated_frame = Hand.visualize(frame)
     cv2.imshow('annotated frame', annotated_frame)
     key = cv2.waitKey(1)&0xFF
     if key == ord('q'):
@@ -108,7 +106,6 @@ cap.release()
 - `detect( image )`
   - arguments
     - `image`: Input image (readed by cv2)
-      - Input image is a frame image flipped holizontal! Otherwise, left hand and right hand are reversed.
   - return values
     - `results`: Probably not necessary
 - [inheritance] `get_normalized_landmark( id_hand, id_landmark )`
@@ -133,11 +130,10 @@ cap = cv2.VideoCapture(0)
 HandGes = HandGesRec()
 while cap.isOpened():
     ret, frame = cap.read()
-    flipped_frame = cv2.flip(frame, 1)
-    HandGes.detect(flipped_frame)
+    HandGes.detect(frame)
     if HandGes.num_detected_hands>0:
         print(HandGes.get_gesture(0), HandGes.get_score_gesture(0))
-    annotated_frame = HandGes.visualize(flipped_frame)
+    annotated_frame = HandGes.visualize(frame)
     cv2.imshow('annotated frame', annotated_frame)
     key = cv2.waitKey(1)&0xFF
     if key == ord('q'):

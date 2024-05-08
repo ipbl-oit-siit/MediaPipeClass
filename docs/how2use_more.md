@@ -80,19 +80,16 @@
                 print("Ignoring empty camera frame.")
                 # If loading a video, use 'break' instead of 'continue'.
                 continue
-    
-            # Flip the image horizontally
-            flipped_frame = cv2.flip(frame, 1) ### very important ####
-    
-            results = Hand.detect(flipped_frame)
+        
+            results = Hand.detect(frame)
     
             # [1] Draw the all landmarks on the image.
             for id_hand in range(Hand.num_detected_hands): # all hands
                 for id_lmk in range(Hand.num_landmarks): # all landmarks
                     landmark_point = Hand.get_landmark(id_hand, id_lmk)
-                    cv2.circle(flipped_frame, landmark_point[:2], 2, (0, 255, 0), 2)
+                    cv2.circle(frame, landmark_point[:2], 2, (0, 255, 0), 2)
     
-            cv2.imshow(wname, flipped_frame)
+            cv2.imshow(wname, frame)
             if cv2.waitKey(5) & 0xFF == ord('q'):
                 break
     
@@ -114,18 +111,18 @@
     ```
     ```python
     # [1] Draw the all landmarks on the image.
-    draw_hand_landmarks(flipped_frame, Hand)
-    cv2.imshow(wname, flipped_frame)
+    draw_hand_landmarks(frame, Hand)
+    cv2.imshow(wname, frame)
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
-    - [myhand.py](../sample/myhand.py)
+    - [myhand.py](../code/myhand.py)
 - PoseLandmark
-    - [mypose.py](../sample/mypose.py)<br>
+    - [mypose.py](../code/mypose.py)<br>
     <image src="../image/mypose.jpg" width=20%>
 - FaceLandmark
-    - [myface.py](../sample/myface.py)<br>
+    - [myface.py](../code/myface.py)<br>
     <image src="../image/myface.jpg" width=20%>
 
 ### :red_square: How to assign id (`id_hand`) by MediaPipe
@@ -136,7 +133,7 @@
 
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [myhand_id.py](../sample/myhand_id.py)
+- [myhand_id.py](../code/myhand_id.py)
 
 ### :red_square: How to refer only to specific landmarks
 #### :white_square_button: on `HandLandmarker`
@@ -156,8 +153,8 @@
     ```
     ```python
     # [1] Draw the all landmarks on the image.
-    draw_hand_landmarks_only_tip(flipped_frame, Hand)
-    cv2.imshow(wname, flipped_frame)
+    draw_hand_landmarks_only_tip(frame, Hand)
+    cv2.imshow(wname, frame)
     ```
     - `cv2.putText`
         ```python
@@ -186,13 +183,13 @@
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
-    - [myhand_specific_lmk.py](../sample/myhand_specific_lmk.py)<br>
+    - [myhand_specific_lmk.py](../code/myhand_specific_lmk.py)<br>
     <image src="../image/myhand_specific_lmk.jpg" width=20%>
 - PoseLandmark
-    - [mypose_specific_lmk.py](../sample/mypose_specific_lmk.py)<br>
+    - [mypose_specific_lmk.py](../code/mypose_specific_lmk.py)<br>
     <image src="../image/mypose_specific_lmk.jpg" width=20%>
 - FaceLandmark
-    - [myface_specific_lmk.py](../sample/myface_specific_lmk.py)<br>
+    - [myface_specific_lmk.py](../code/myface_specific_lmk.py)<br>
     <image src="../image/myface_specific_lmk.jpg" width=20%>
 
 ### :red_square: How to calcurate center of gravity (cog) of specific landmarks
@@ -212,12 +209,12 @@ def draw_cog_point_of_all_tips(image, Hand):
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
-    - [myhand_center_of_gravity.py](../sample/myhand_center_of_gravity.py)
+    - [myhand_center_of_gravity.py](../code/myhand_center_of_gravity.py)
 - PoseLandmark
-    - [mypose_center_of_gravity.py](../sample/mypose_center_of_gravity.py)<br>
+    - [mypose_center_of_gravity.py](../code/mypose_center_of_gravity.py)<br>
     <image src="../image/mypose_center_of_gravity.jpg" width=20%>
 - FaceLandmark
-    - [myface_center_of_gravity.py](../sample/myface_center_of_gravity.py)<br>
+    - [myface_center_of_gravity.py](../code/myface_center_of_gravity.py)<br>
     <image src="../image/myface_center_of_gravity.jpg" width=20%>
 
 ### :red_square: How to make landmark array
@@ -238,20 +235,20 @@ def draw_cog_point_of_all_tips(image, Hand):
 - :o: How to use
     ```python
     # list ----------------------------------------------
-    hand_landmarks = make_hand_landmarks_array(flipped_frame, Hand)
+    hand_landmarks = make_hand_landmarks_array(frame, Hand)
     point1 = hand_landmarks[0][1] # 1-th landmark of 0-th hand
     point2 = hand_landmarks[1][1] # 1-th landmark of 1-th hand
     vec = point1 - point2 # vector (point2 -> point1)
 
     for hand in hand_landmarks: # all hands
         for landmark in hand: # all landmarks
-            cv2.circle(flipped_frame, landmark[:2], 1, (0, 0, 255), 2)
+            cv2.circle(frame, landmark[:2], 1, (0, 0, 255), 2)
 
     id_list_tip = [4, 8, 12, 16, 20]
     for hand in hand_landmarks: # all hands
         for index, landmark in enumerate(hand): # all landmarks
             if index in id_list_tip: # only TIP landmarks
-                cv2.circle(flipped_frame, landmark[:2], 1, (0, 0, 255), 2)
+                cv2.circle(frame, landmark[:2], 1, (0, 0, 255), 2)
     ```
     ```python
     # getter --------------------------------------------
@@ -332,12 +329,12 @@ def draw_cog_point_of_all_tips(image, Hand):
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
 - HandLandmark
-    - [myhand_calc_angle.py](../sample/myhand_calc_angle.py)
+    - [myhand_calc_angle.py](../code/myhand_calc_angle.py)
 - PoseLandmark
-    - [mypose_calc_angle.py](../sample/mypose_calc_angle.py)<br>
+    - [mypose_calc_angle.py](../code/mypose_calc_angle.py)<br>
     <image src="../image/mypose_calc_angle_2lines.jpg" width=20%><image src="../image/mypose_calc_angle_Yaxis.jpg" width=20%>
 - FaceLandmark
-    - [myface_calc_angle_Yaxis.py](../sample/myface_calc_angle_Yaxis.py)<br>
+    - [myface_calc_angle_Yaxis.py](../code/myface_calc_angle_Yaxis.py)<br>
     <image src="../image/myface_calc_angle_Yaxis.jpg" width=20%>
 
 
@@ -353,11 +350,15 @@ def draw_cog_point_of_all_tips(image, Hand):
     def draw_hands_with_handedness(image, Hand):
         RIGHT_HAND_COLOR = (0, 255, 0)
         LEFT_HAND_COLOR = (100, 100, 255)
+        H_MARGIN = 10  # pixels
+        V_MARGIN = 30  # pixels
+        FONT_SIZE = 1
+        FONT_THICKNESS = 1
 
         for id_hand in range(Hand.num_detected_hands):
             handedness = Hand.get_handedness(id_hand)
             score = Hand.get_score_handedness(id_hand)
-            wrist_point = Hand.get_landmark(i, 0)
+            wrist_point = Hand.get_landmark(id_hand, 0)
 
             if handedness == 'Right':
                 color = RIGHT_HAND_COLOR
@@ -369,12 +370,12 @@ def draw_cog_point_of_all_tips(image, Hand):
                 cv2.circle(image, tuple(landmark_point[:2]), 1, color, 2)
 
             txt = handedness+'('+'{:#.2f}'.format(score)+')'
-            wrist_point_for_text = (wrist_point[0]+self.H_MARGIN, wrist_point[1]+self.V_MARGIN)
-            cv2.putText(image, org=wrist_point_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=self.FONT_SIZE, color=color, thickness=self.FONT_THICKNESS, lineType=cv2.LINE_4)
+            wrist_point_for_text = (wrist_point[0]+H_MARGIN, wrist_point[1]+V_MARGIN)
+            cv2.putText(image, org=wrist_point_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=FONT_SIZE, color=color, thickness=FONT_THICKNESS, lineType=cv2.LINE_4)
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [myhand_handedness.py](../sample/myhand_handedness.py)
+- [myhand_handedness.py](../code/myhand_handedness.py)
 
 ### :red_square: `HandGestureRecognition`
 - `HandGestureRecognition` can recognize what gesture is being made with hand.
@@ -403,7 +404,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [myhand_gesture.py](../sample/myhand_gesture.py)
+- [myhand_gesture.py](../code/myhand_gesture.py)
 
 ---
 ### :red_square: `PoseLandmark`
@@ -509,10 +510,10 @@ def draw_cog_point_of_all_tips(image, Hand):
 - You can binarize the segmentation mask by using a threshold value (e.g. `0.5`).
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [mypose_cog_only_visible.py](../sample/mypose_cog_only_visible.py)
-- [mypose_judge_hand_up.py](../sample/mypose_judge_hand_up.py)
-- [mypose_judge_O_X.py](../sample/mypose_judge_O_X.py)
-- [mypose_segmentation.py](../sample/mypose_segmentation.py)
+- [mypose_cog_only_visible.py](../code/mypose_cog_only_visible.py)
+- [mypose_judge_hand_up.py](../code/mypose_judge_hand_up.py)
+- [mypose_judge_O_X.py](../code/mypose_judge_O_X.py)
+- [mypose_segmentation.py](../code/mypose_segmentation.py)
 
 ---
 ### :red_square: `FaceLandmark`
@@ -551,7 +552,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [myface_left_right.py](../sample/myface_left_right.py)
+- [myface_left_right.py](../code/myface_left_right.py)
 
 ---
 ### :red_square: `FaceDetection`
@@ -577,7 +578,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [myface_detection.py](../sample/myface_detection.py)
+- [myface_detection.py](../code/myface_detection.py)
 
 ---
 ### :red_square: `ObjectDetection`
@@ -610,7 +611,7 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [myobj.py](../sample/myobj.py)
+- [myobj.py](../code/myobj.py)
 
 ---
 ### :red_square: `ImageSegmentation`
@@ -641,4 +642,4 @@ def draw_cog_point_of_all_tips(image, Hand):
     ```
 #### :white_square_button: Samples
 > **Note** Note that these programs must be placed in the same directory as `our MediaPipe Class file` to work.
-- [myseg.py](../sample/myseg.py)
+- [myseg.py](../code/myseg.py)

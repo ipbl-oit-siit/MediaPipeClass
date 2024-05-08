@@ -19,7 +19,7 @@
 
 ||Pose|Hand|HandGes|Face|FaceDtc|Obj|Seg|
 |-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|**image to use**|frame|flipped_frame|flipped_frame|flipped_frame|flipped_frame|either|either|
+|**image to use**|frame|frame|frame|flipped_frame|flipped_frame|either|either|
 |**`num_detected_*`**|o|o|o|o|o|o|-|
 |**`num_landmarks`**|o|o|o|o|o|-|-|
 |**coordinate data**|get_landmark|get_landmark|get_landmark|get_landmark|get_landmark<br>get_bounding_box|get_bounding_box|-|
@@ -51,10 +51,9 @@ cap = cv2.VideoCapture(0)
 Hand = HandLmk()
 while cap.isOpened():
     ret, frame = cap.read()
-    flipped_frame = cv2.flip(frame, 1)
-    Hand.detect(flipped_frame)
+    Hand.detect(frame)
     print(Hand.num_detected_hands)
-    annotated_frame = Hand.visualize(flipped_frame)
+    annotated_frame = Hand.visualize(frame)
     cv2.imshow('annotated frame', annotated_frame)
     key = cv2.waitKey(1)&0xFF
     if key == ord('q'):
@@ -78,11 +77,10 @@ cap = cv2.VideoCapture(0)
 HandGes = HandGesRec()
 while cap.isOpened():
     ret, frame = cap.read()
-    flipped_frame = cv2.flip(frame, 1)
-    HandGes.detect(flipped_frame)
+    HandGes.detect(frame)
     if HandGes.num_detected_hands>0:
         print(HandGes.get_gesture(0), HandGes.get_score_gesture(0))
-    annotated_frame = HandGes.visualize(flipped_frame)
+    annotated_frame = HandGes.visualize(frame)
     cv2.imshow('annotated frame', annotated_frame)
     key = cv2.waitKey(1)&0xFF
     if key == ord('q'):
