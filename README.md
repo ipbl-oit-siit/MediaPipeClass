@@ -35,8 +35,7 @@
 ## :red_square: how to use
 - The following is a simple description of use of our class.
     - **:exclamation: Note that these programs must be placed in the same directory as `our Mediapipe Class file` to work.**
-        - [MediaPipeClass.zip](./MediaPipeClass.zip "download")
-        - <a href="https://github.com/ipbl-oit-siit/MediaPipeClass/blob/main/MediaPipeClass.zip" download>link</a>
+        - [MediaPipeClass.zip](./MediaPipeClass.zip)
     - Create a new python file in the same directory as `our Mediapipe Class file`, copy and paste the following sample code, and run it.
 ### :o: HandLandmark
 - draw hand landmarks and handedness, and print the number of detected hands<br>
