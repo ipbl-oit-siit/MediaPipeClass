@@ -129,7 +129,7 @@ class MediapipePoseLandmark():
         return self.results.pose_landmarks[id_pose][id_landmark].visibility
 
     def get_landmark_presence(self, id_pose, id_landmark):
-        return self.results.pose_landmarks[id_pose][id_landmark].visibility
+        return self.results.pose_landmarks[id_pose][id_landmark].presence
 
     def get_segmentation_mask(self, id_pose):
         if self.num_detected_poses == 0:
