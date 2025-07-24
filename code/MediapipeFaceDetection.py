@@ -11,8 +11,8 @@ import mediapipe as mp
 class MediapipeFaceDetection():
     # https://storage.googleapis.com/mediapipe-models/
     base_url = 'https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/latest/'
-    model_folder_path = './models'
     model_name = 'blaze_face_short_range.tflite'
+    model_folder_path = './learned_models/mediapipe'
 
     MARGIN = 10  # pixels
     ROW_SIZE = 10  # pixels
@@ -35,15 +35,22 @@ class MediapipeFaceDetection():
             base_url=base_url,
             model_name=model_name,
             min_detection_confidence=0.5,
-            min_suppression_threshold=0.3
+            min_suppression_threshold=0.3,
+            mode="image"
             ):
+
+        self.mode = mode
+        if self.mode == "image":
+            rmode = mp.tasks.vision.RunningMode.IMAGE
+        else:
+            rmode = mp.tasks.vision.RunningMode.VIDEO
 
         model_path = self.set_model(base_url, model_folder_path, model_name)
         options = mp.tasks.vision.FaceDetectorOptions(
             base_options=mp.tasks.BaseOptions(model_asset_path=model_path),
             min_detection_confidence=min_detection_confidence,
             min_suppression_threshold=min_suppression_threshold,
-            running_mode=mp.tasks.vision.RunningMode.VIDEO
+            running_mode=rmode
         )
         self.detector = mp.tasks.vision.FaceDetector.create_from_options(options)
         self.num_landmarks = self.NUM_LMK # default
@@ -53,8 +60,7 @@ class MediapipeFaceDetection():
         # download model if model file does not exist
         if not os.path.exists(model_path):
             # make directory if model_folder directory does not exist
-            if not os.path.exists(model_folder_path):
-                os.mkdir(model_folder_path)
+            os.makedirs(model_folder_path, exist_ok=True)
             # download model file
             url = base_url+model_name
             save_name = model_path
@@ -63,8 +69,11 @@ class MediapipeFaceDetection():
 
     def detect(self, img):
         self.size = img.shape
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
-        self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        if self.mode == "image":
+            self.results = self.detector.detect(mp_image)
+        else:
+            self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
         self.num_detected_faces = len(self.results.detections)
         return self.results
 

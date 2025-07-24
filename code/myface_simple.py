@@ -5,7 +5,7 @@ import cv2
 from MediapipeFaceLandmark import MediapipeFaceLandmark as FaceLmk
 
 cap = cv2.VideoCapture(0)
-Face = FaceLmk()
+Face = FaceLmk(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     flipped_frame = cv2.flip(frame, 1)

@@ -5,7 +5,7 @@ import cv2
 from MediapipeObjectDetection import MediapipeObjectDetection as ObjDetection
 
 cap = cv2.VideoCapture(0)
-Obj = ObjDetection(score_threshold=0.5)
+Obj = ObjDetection(mode="video", score_threshold=0.5)
 while cap.isOpened():
     ret, frame = cap.read()
     Obj.detect(frame)

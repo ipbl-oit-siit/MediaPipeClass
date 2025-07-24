@@ -8,7 +8,7 @@
     - `HandLandmark`: 21 points<br>
     <image src="https://developers.google.com/static/mediapipe/images/solutions/hand-landmarks.png" width="50%" height="50%"><br>
     - `FaceLandmark`: 478 points<br>
-    <image src="https://developers.google.com/static/mediapipe/images/solutions/face_landmarker_keypoints.png" width="20%" height="20%"><image src="https://github.com/google/mediapipe/blob/7c28c5d58ffbcb72043cbe8c9cc32b40aaebac41/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png" width="25%" height="25%"><image src="https://assets.st-note.com/img/1651496052067-uj9cOgR2LZ.png?width=2000&height=2000&fit=bounds&format=jpg&quality=85" width="25%" height="25%"><br>
+    <image src="https://developers.google.com/static/mediapipe/images/solutions/face_landmarker_keypoints.png" width="20%" height="20%"><image src="https://raw.githubusercontent.com/google-ai-edge/mediapipe/7c28c5d58ffbcb72043cbe8c9cc32b40aaebac41/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png" width="25%" height="25%"><image src="https://assets.st-note.com/img/1651496052067-uj9cOgR2LZ.png?width=2000&height=2000&fit=bounds&format=jpg&quality=85" width="25%" height="25%"><br>
     - `PoseLandmark`: 33 points<br>
     <image src="https://developers.google.com/static/mediapipe/images/solutions/pose_landmarks_index.png" width="20%" height="20%"><br>
 - The following is some examples of how to refer landmarks.

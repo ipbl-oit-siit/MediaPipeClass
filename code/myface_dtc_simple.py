@@ -5,7 +5,7 @@ import cv2
 from MediapipeFaceDetection import MediapipeFaceDetection as FaceDect
 
 cap = cv2.VideoCapture(0)
-Face = FaceDect()
+Face = FaceDect(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     flipped_frame = cv2.flip(frame, 1)

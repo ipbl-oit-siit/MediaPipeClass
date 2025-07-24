@@ -9,47 +9,83 @@ import mediapipe as mp
 
 # https://developers.google.com/mediapipe/solutions/vision/image_segmenter
 class MediapipeImageSegmentation():
+    model_folder_path = './learned_models/mediapipe'
     # https://storage.googleapis.com/mediapipe-models/
-    # base_url = 'https://storage.googleapis.com/mediapipe-tasks/image_segmenter/'
-    # model_name = 'deeplabv3.tflite'
-    base_url = 'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/'
-    model_name = 'selfie_multiclass_256x256.tflite'
-    model_folder_path = './models'
-
-    # skin_type (selfie_multiclass_256x256.tflite)
-    NUM_TYPES = 6
-    BACKGROUND = 0
-    HAIR = 1
-    BODY_SKIN = 2
-    FACE_SKIN = 3
-    CLOTHES = 4
-    OTHERS = 5
 
     def __init__(
             self,
             model_folder_path=model_folder_path,
-            base_url=base_url,
-            model_name=model_name,
+            base_url="",
+            model_name="",
+            model="selfie",
             output_category_mask=True,
             output_confidence_masks=True,
+            mode="image"
             ):
+        
+        if base_url == "" or model_name == "":
+            print("set Default "+model+" model")
+            self.serect_model(model)
 
-        model_path = self.set_model(base_url, model_folder_path, model_name)
+        self.mode = mode
+        if self.mode == "image":
+            rmode = mp.tasks.vision.RunningMode.IMAGE
+        else:
+            rmode = mp.tasks.vision.RunningMode.VIDEO
+
+        model_path = self.set_model(self.base_url, model_folder_path, self.model_name)
         options = mp.tasks.vision.ImageSegmenterOptions(
             base_options=mp.tasks.BaseOptions(model_asset_path=model_path),
-            running_mode=mp.tasks.vision.RunningMode.VIDEO,
+            running_mode=rmode,
             output_category_mask=output_category_mask,
             output_confidence_masks=output_confidence_masks
         )
         self.segmenter = mp.tasks.vision.ImageSegmenter.create_from_options(options)
+
+    def serect_model(self, model):
+        if model == "selfie":
+            # skin_type (selfie_multiclass_256x256.tflite)
+            self.base_url = 'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/'
+            self.model_name = 'selfie_multiclass_256x256.tflite'
+            self.NUM_TYPES = 6
+            self.BACKGROUND = 0
+            self.HAIR = 1
+            self.BODY_SKIN = 2
+            self.FACE_SKIN = 3
+            self.CLOTHES = 4
+            self.OTHERS = 5
+        elif model == "deeplab":
+            self.base_url = 'https://storage.googleapis.com/mediapipe-tasks/image_segmenter/'
+            self.model_name = 'deeplabv3.tflite'
+            self.NUM_TYPES = 21
+            self.BACKGROUND = 0
+            self.AIRPLANE = 1
+            self.BICYCLE = 2
+            self.BIRD = 3
+            self.BOAT = 4
+            self.BOTTLE = 5
+            self.BUS = 6
+            self.CAR = 7
+            self.CAT = 8
+            self.CHAIR = 9
+            self.COW = 10
+            self.DINING_TABLE = 11
+            self.DOG = 12
+            self.HORSE = 13
+            self.MOTORBIKE = 14
+            self.PERSON = 15
+            self.POTTED_PLANT = 16
+            self.SHEEP = 17
+            self.SOFA = 18
+            self.TRAIN = 19
+            self.TV_MONITOR = 20
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
         # download model if model file does not exist
         if not os.path.exists(model_path):
             # make directory if model_folder directory does not exist
-            if not os.path.exists(model_folder_path):
-                os.mkdir(model_folder_path)
+            os.makedirs(model_folder_path, exist_ok=True)
             # download model file
             url = base_url+model_name
             save_name = model_path
@@ -57,8 +93,11 @@ class MediapipeImageSegmentation():
         return model_path
 
     def detect(self, img):
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
-        self.results = self.segmenter.segment_for_video(mp_image, int(time.time() * 1000))
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        if self.mode == "image":
+            self.results = self.segmenter.segment(mp_image)
+        else:
+            self.results = self.segmenter.segment_for_video(mp_image, int(time.time() * 1000))
         return self.results
 
     def get_segmentation_masks(self):
@@ -80,7 +119,8 @@ class MediapipeImageSegmentation():
 
 def main():
     cap = cv2.VideoCapture(0)
-    ImgSeg = MediapipeImageSegmentation()
+    model = "selfie"
+    ImgSeg = MediapipeImageSegmentation(model=model)
     while cap.isOpened():
         ret, frame = cap.read()
         if ret is False:
@@ -93,7 +133,12 @@ def main():
         cv2.imshow('multiclass mask', cv2.applyColorMap(normalized_masks, cv2.COLORMAP_JET))
 
         # masks = ImgSeg.get_segmentation_masks()
-        face_skin_masks = ImgSeg.get_segmentation_mask(ImgSeg.FACE_SKIN)
+        if model == "selfie":
+            face_skin_masks = ImgSeg.get_segmentation_mask(ImgSeg.FACE_SKIN)
+        elif model == "deeplab":
+            face_skin_masks = ImgSeg.get_segmentation_mask(ImgSeg.PERSON)
+        else:
+            face_skin_masks = ImgSeg.get_segmentation_mask(0)
         cv2.imshow('face skin', face_skin_masks)
 
         cv2.imshow('frame', frame)

@@ -11,12 +11,13 @@ from mediapipe.framework.formats import landmark_pb2
 
 # https://developers.google.com/mediapipe/solutions/vision/pose_landmarker#get_started
 class MediapipePoseLandmark():
+    model_folder_path = './learned_models/mediapipe'
+
     # https://storage.googleapis.com/mediapipe-models/
     base_url = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/latest/'
     model_name = 'pose_landmarker_heavy.task'
     # base_url = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/'
     # model_name = 'pose_landmarker_lite.task'
-    model_folder_path = './models'
 
     # visualize params
     RADIUS_SIZE = 3  # pixels
@@ -70,7 +71,14 @@ class MediapipePoseLandmark():
             min_pose_presence_confidence=0.5,
             min_tracking_confidence=0.5,
             output_segmentation_masks=True,
+            mode="image"
             ):
+
+        self.mode = mode
+        if self.mode == "image":
+            rmode = mp.tasks.vision.RunningMode.IMAGE
+        else:
+            rmode = mp.tasks.vision.RunningMode.VIDEO
 
         model_path = self.set_model(base_url, model_folder_path, model_name)
         options = mp.tasks.vision.PoseLandmarkerOptions(
@@ -80,19 +88,18 @@ class MediapipePoseLandmark():
             min_pose_presence_confidence=min_pose_presence_confidence,
             min_tracking_confidence=min_tracking_confidence,
             output_segmentation_masks=output_segmentation_masks,
-            running_mode=mp.tasks.vision.RunningMode.VIDEO
+            running_mode=rmode
         )
         self.detector = mp.tasks.vision.PoseLandmarker.create_from_options(options)
         self.num_landmarks = self.NUM_LMK # default
 
     def set_model(self, base_url, model_folder_path, model_name):
         model_path = model_folder_path+'/'+model_name
-        # modelファイルが存在しない場合，ダウンロードしてくる
+        # download model if model file does not exist
         if not os.path.exists(model_path):
-            # model_folderが存在しない場合，フォルダを作成する
-            if not os.path.exists(model_folder_path):
-                os.mkdir(model_folder_path)
-            # モデルをダウンロードする
+            # make directory if model_folder directory does not exist
+            os.makedirs(model_folder_path, exist_ok=True)
+            # download model file
             url = base_url+model_name
             save_name = model_path
             urllib.request.urlretrieve(url, save_name)
@@ -100,8 +107,11 @@ class MediapipePoseLandmark():
 
     def detect(self, img):
         self.size = img.shape
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
-        self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        if self.mode == "image":
+            self.results = self.detector.detect(mp_image)
+        else:
+            self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
         self.num_detected_poses = len(self.results.pose_landmarks)
         return self.results
 

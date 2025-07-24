@@ -48,7 +48,7 @@ import cv2
 from MediapipeHandLandmark import MediapipeHandLandmark as HandLmk
 
 cap = cv2.VideoCapture(0)
-Hand = HandLmk()
+Hand = HandLmk(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     Hand.detect(frame)
@@ -62,6 +62,19 @@ cv2.destroyAllWindows()
 Hand.release()
 cap.release()
 ```
+```python
+# myhand_simple_image.py
+import cv2
+from MediapipeHandLandmark import MediapipeHandLandmark as HandLmk
+
+img = cv2.imread("./img/standard/Balloon.bmp")
+Hand = HandLmk(mode="image")
+results = Hand.detect(img)
+annotated_img = Hand.visualize(img)
+cv2.imshow("annotated_img", annotated_img)
+cv2.waitKey(0)
+Hand.release()
+```
 ### :o: HandGestureRecognition
 - draw hand landmarks and handedness, and print gesture name and its score
     - recognizable gesture: `None`, `Closed_Fist`, `Open_Plam`, `Pointing_up`, `Thumb_Down`, `Thumb_Up`, `Victory`, `ILoveYou`<br>
@@ -74,7 +87,7 @@ import cv2
 from MediapipeHandGestureRecognition import MediapipeHandGestureRecognition as HandGesRec
 
 cap = cv2.VideoCapture(0)
-HandGes = HandGesRec()
+HandGes = HandGesRec(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     HandGes.detect(frame)
@@ -89,6 +102,22 @@ cv2.destroyAllWindows()
 HandGes.release()
 cap.release()
 ```
+```python
+# myhand_ges_simple_image.py
+import cv2
+from MediapipeHandGestureRecognition import MediapipeHandGestureRecognition as HandGesRec
+
+img = cv2.imread("./img/standard/Balloon.bmp")
+HandGes = HandGesRec(mode="image")
+HandGes.detect(img)
+if HandGes.num_detected_hands>0:
+    print(HandGes.get_gesture(0), HandGes.get_score_gesture(0))
+annotated_img = HandGes.visualize(img)
+
+cv2.imshow("annotated_img", annotated_img)
+cv2.waitKey(0)
+HandGes.release()
+```
 ### :o: PoseLandmark
 - draw pose landmarks and segmentation mask on image<br>
     <image src="image/mypose_simple.jpg" width=25% height=25%>
@@ -100,7 +129,7 @@ import cv2
 from MediapipePoseLandmark import MediapipePoseLandmark as PoseLmk
 
 cap = cv2.VideoCapture(0)
-Pose = PoseLmk()
+Pose = PoseLmk(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     Pose.detect(frame)
@@ -115,6 +144,20 @@ cv2.destroyAllWindows()
 Pose.release()
 cap.release()
 ```
+```python
+# mypose_simple_image.py
+import cv2
+from MediapipePoseLandmark import MediapipePoseLandmark as PoseLmk
+
+img = cv2.imread("./img/standard/Balloon.bmp")
+Pose = PoseLmk(mode="image")
+Pose.detect(img)
+annotated_img = Pose.visualize(img)
+cv2.imshow("annotated_img", annotated_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+Pose.release()
+```
 ### :o: FaceLandmark
 - draw face landmarks<br>
     <image src="image/myface_simple.jpg" width=25% height=25%>
@@ -126,7 +169,7 @@ import cv2
 from MediapipeFaceLandmark import MediapipeFaceLandmark as FaceLmk
 
 cap = cv2.VideoCapture(0)
-Face = FaceLmk()
+Face = FaceLmk(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     flipped_frame = cv2.flip(frame, 1)
@@ -139,6 +182,20 @@ while cap.isOpened():
 cv2.destroyAllWindows()
 Face.release()
 cap.release()
+```
+```python
+# myface_simple_image.py
+import cv2
+from MediapipeFaceLandmark import MediapipeFaceLandmark as FaceLmk
+
+img = cv2.imread("./img/standard/Balloon.bmp")
+Face = FaceLmk(mode="image")
+Face.detect(img)
+annotated_img = Face.visualize(img)
+cv2.imshow("annotated_img", annotated_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+Face.release()
 ```
 ### :o: FaceDetection
 - draw face bounding box, face keypoints, and detection score<br>
@@ -151,7 +208,7 @@ import cv2
 from MediapipeFaceDetection import MediapipeFaceDetection as FaceDect
 
 cap = cv2.VideoCapture(0)
-Face = FaceDect()
+Face = FaceDect(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     flipped_frame = cv2.flip(frame, 1)
@@ -165,6 +222,20 @@ cv2.destroyAllWindows()
 Face.release()
 cap.release()
 ```
+```python
+# myface_dtc_simple_image.py
+import cv2
+from MediapipeFaceDetection import MediapipeFaceDetection as FaceDect
+
+img = cv2.imread("./img/standard/Balloon.bmp")
+Face = FaceDect(mode="image")
+Face.detect(img)
+annotated_img = Face.visualize(img)
+cv2.imshow("annotated_img", annotated_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+Face.release()
+```
 ### :o: ObjectDetection
 - draw the all object's bounding box, object name and detection score, and print the number of detected objects<br>
     <image src="image/myobj_simple.jpg" width=25% height=25%>
@@ -176,7 +247,7 @@ import cv2
 from MediapipeObjectDetection import MediapipeObjectDetection as ObjDetection
 
 cap = cv2.VideoCapture(0)
-Obj = ObjDetection(score_threshold=0.5)
+Obj = ObjDetection(mode="video", score_threshold=0.5)
 while cap.isOpened():
     ret, frame = cap.read()
     Obj.detect(frame)
@@ -190,6 +261,21 @@ cv2.destroyAllWindows()
 Obj.release()
 cap.release()
 ```
+```python
+# myobj_simple_image.py
+import cv2
+from MediapipeObjectDetection import MediapipeObjectDetection as ObjDetection
+
+img = cv2.imread("./img/standard/Balloon.bmp")
+Obj = ObjDetection(mode="image", score_threshold=0.5)
+Obj.detect(img)
+print(Obj.num_detected_objects)
+annotated_frame = Obj.visualize(img)
+cv2.imshow('annotated frame', annotated_frame)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+Obj.release()
+```
 ### :o: ImageSegmentation
 - draw normalized segmentation masks, face skin mask, input image
     - dark blue:`background`, blue: `hair`, light blue: `body_skin`, yellow: `face_skin`, orange: `clothes`, red: `others`<br>
@@ -202,7 +288,7 @@ import cv2
 from MediapipeImageSegmentation import MediapipeImageSegmentation as ImgSeg
 
 cap = cv2.VideoCapture(0)
-Seg = ImgSeg()
+Seg = ImgSeg(mode="video")
 while cap.isOpened():
     ret, frame = cap.read()
     Seg.detect(frame)
@@ -217,4 +303,21 @@ while cap.isOpened():
 cv2.destroyAllWindows()
 Seg.release()
 cap.release()
+```
+```python
+# myseg_simple_image.py
+import cv2
+from MediapipeImageSegmentation import MediapipeImageSegmentation as ImgSeg
+
+img = cv2.imread("./img/standard/Balloon.bmp")
+Seg = ImgSeg(mode="image")
+Seg.detect(img)
+normalized_masks = Seg.get_normalized_masks()
+cv2.imshow('multiclass mask', cv2.applyColorMap(normalized_masks, cv2.COLORMAP_JET))
+face_skin_masks = Seg.get_segmentation_mask(Seg.FACE_SKIN)
+cv2.imshow('face skin', face_skin_masks)
+cv2.imshow('frame', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+Seg.release()
 ```

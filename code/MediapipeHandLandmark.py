@@ -14,7 +14,7 @@ class MediapipeHandLandmark():
     # https://storage.googleapis.com/mediapipe-models/
     base_url = 'https://storage.googleapis.com/mediapipe-tasks/hand_landmarker/'
     model_name = 'hand_landmarker.task'
-    model_folder_path = './models'
+    model_folder_path = './learned_models/mediapipe'
 
     # visualize param
     H_MARGIN = 10  # pixels
@@ -59,8 +59,15 @@ class MediapipeHandLandmark():
             num_hands=2,
             min_hand_detection_confidence=0.5,
             min_hand_presence_confidence=0.5,
-            min_tracking_confidence=0.5
+            min_tracking_confidence=0.5,
+            mode="image"
             ):
+
+        self.mode = mode
+        if self.mode == "image":
+            rmode = mp.tasks.vision.RunningMode.IMAGE
+        else:
+            rmode = mp.tasks.vision.RunningMode.VIDEO
 
         model_path = self.set_model(base_url, model_folder_path, model_name)
         options = mp.tasks.vision.HandLandmarkerOptions(
@@ -69,7 +76,7 @@ class MediapipeHandLandmark():
             min_hand_detection_confidence=min_hand_detection_confidence,
             min_hand_presence_confidence=min_hand_presence_confidence,
             min_tracking_confidence=min_tracking_confidence,
-            running_mode=mp.tasks.vision.RunningMode.VIDEO
+            running_mode=rmode
         )
         self.detector = mp.tasks.vision.HandLandmarker.create_from_options(options)
         self.num_landmarks = self.NUM_LMK # default
@@ -79,8 +86,7 @@ class MediapipeHandLandmark():
         # download model if model file does not exist
         if not os.path.exists(model_path):
             # make directory if model_folder directory does not exist
-            if not os.path.exists(model_folder_path):
-                os.mkdir(model_folder_path)
+            os.makedirs(model_folder_path, exist_ok=True)
             # download model file
             url = base_url+model_name
             save_name = model_path
@@ -89,8 +95,11 @@ class MediapipeHandLandmark():
 
     def detect(self, img):
         self.size = img.shape
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
-        self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        if self.mode == "image":
+            self.results = self.detector.detect(mp_image)
+        else:
+            self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
         self.num_detected_hands = len(self.results.hand_landmarks)
         return self.results
 

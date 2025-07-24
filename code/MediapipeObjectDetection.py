@@ -12,7 +12,7 @@ class MediapipeObjectDetection():
     # https://storage.googleapis.com/mediapipe-models/
     base_url = 'https://storage.googleapis.com/mediapipe-tasks/object_detector/'
     model_name = 'efficientdet_lite0_fp32.tflite'
-    model_folder_path = './models'
+    model_folder_path = './learned_models/mediapipe'
 
     H_MARGIN = 10  # pixels
     V_MARGIN = 30  # pixels
@@ -30,15 +30,22 @@ class MediapipeObjectDetection():
             base_url=base_url,
             model_name=model_name,
             max_results=-1,
-            score_threshold=0.0
+            score_threshold=0.0,
+            mode="image"
             ):
+
+        self.mode = mode
+        if self.mode == "image":
+            rmode = mp.tasks.vision.RunningMode.IMAGE
+        else:
+            rmode = mp.tasks.vision.RunningMode.VIDEO
 
         model_path = self.set_model(base_url, model_folder_path, model_name)
         options = mp.tasks.vision.ObjectDetectorOptions(
             base_options=mp.tasks.BaseOptions(model_asset_path=model_path),
             max_results=max_results,
             score_threshold=score_threshold,
-            running_mode=mp.tasks.vision.RunningMode.VIDEO
+            running_mode=rmode
         )
         self.detector = mp.tasks.vision.ObjectDetector.create_from_options(options)
 
@@ -47,19 +54,22 @@ class MediapipeObjectDetection():
         # download model if model file does not exist
         if not os.path.exists(model_path):
             # make directory if model_folder directory does not exist
-            if not os.path.exists(model_folder_path):
-                os.mkdir(model_folder_path)
+            os.makedirs(model_folder_path, exist_ok=True)
             # download model file
             url = base_url+model_name
             save_name = model_path
             urllib.request.urlretrieve(url, save_name)
         return model_path
 
-    def detect(self, image):
-      mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
-      self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
-      self.num_detected_objects = len(self.results.detections)
-      return self.results
+    def detect(self, img):
+        self.size = img.shape
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        if self.mode == "image":
+            self.results = self.detector.detect(mp_image)
+        else:
+            self.results = self.detector.detect_for_video(mp_image, int(time.time() * 1000))
+        self.num_detected_objects = len(self.results.detections)
+        return self.results
 
     def get_bounding_box(self, id_object):
         if self.num_detected_objects == 0:
