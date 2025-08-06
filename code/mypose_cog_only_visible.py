@@ -9,7 +9,7 @@ device = 0 # cameera device number
 
 def get_frame_number(start:float, fps:int):
     now = time.perf_counter() - start
-    frame_now = int(now * 1000 / fps)
+    frame_now = int(now * fps)
     return frame_now
 
 def draw_pose_landmarks_only_basic_points(image, Pose):
