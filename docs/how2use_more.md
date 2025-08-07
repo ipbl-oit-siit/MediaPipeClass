@@ -81,7 +81,7 @@
                 # If loading a video, use 'break' instead of 'continue'.
                 continue
         
-            results = Hand.detect(frame)
+            Hand.detect(frame)
     
             # [1] Draw the all landmarks on the image.
             for id_hand in range(Hand.num_detected_hands): # all hands
