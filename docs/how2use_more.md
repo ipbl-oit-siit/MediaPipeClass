@@ -66,7 +66,7 @@
         cv2.namedWindow(wname, cv2.WINDOW_NORMAL)
     
         # make instance of our mediapipe class
-        # you can set options
+        # you can set options if you need
         Hand = HandLmk()
     
         while cap.isOpened():
