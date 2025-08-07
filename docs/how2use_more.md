@@ -42,7 +42,7 @@
     import time
     from MediapipeHandLandmark import MediapipeHandLandmark as HandLmk
     
-    device = 0 # cameera device number
+    device = 0 # camera device number
     
     def get_frame_number(start:float, fps:int):
         now = time.perf_counter() - start
