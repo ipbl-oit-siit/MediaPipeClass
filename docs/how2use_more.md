@@ -46,7 +46,7 @@
     
     def get_frame_number(start:float, fps:int):
         now = time.perf_counter() - start
-        frame_now = int(now * 1000 / fps)
+        frame_now = int(now * fps)
         return frame_now
     
     def main():
