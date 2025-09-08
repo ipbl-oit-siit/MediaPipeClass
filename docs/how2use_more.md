@@ -1,6 +1,6 @@
 # How to use more
 
-[back to the top page of MEdiaPipe Class](../README.md)
+[back to the top page of MediaPipe Class](../README.md)
 
 ---
 ## :green_square: How to use landmarks
