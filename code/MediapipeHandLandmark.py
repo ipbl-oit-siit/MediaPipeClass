@@ -6,8 +6,11 @@ import numpy as np
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
 import mediapipe as mp
-from mediapipe import solutions
-from mediapipe.framework.formats import landmark_pb2
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
+
+# from mediapipe import solutions
+# from mediapipe.framework.formats import landmark_pb2
 
 # https://developers.google.com/mediapipe/solutions/vision/hand_landmarker#get_started
 class MediapipeHandLandmark():
@@ -162,35 +165,35 @@ class MediapipeHandLandmark():
             cv2.putText(annotated_image, org=wrist_point_for_text, text=txt, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=self.FONT_SIZE, color=color, thickness=self.FONT_THICKNESS, lineType=cv2.LINE_4)
         return annotated_image
 
-    def visualize_with_mp(self, image):
-        hand_landmarks_list = self.results.hand_landmarks
-        handedness_list = self.results.handedness
-        annotated_image = np.copy(image)
-        # Loop through the detected hands to visualize.
-        for idx in range(len(hand_landmarks_list)):
-            hand_landmarks = hand_landmarks_list[idx]
-            handedness = handedness_list[idx]
-            # Draw the hand landmarks.
-            hand_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
-            hand_landmarks_proto.landmark.extend([
-            landmark_pb2.NormalizedLandmark(x=landmark.x, y=landmark.y, z=landmark.z) for landmark in hand_landmarks])
-            solutions.drawing_utils.draw_landmarks(
-            annotated_image,
-            hand_landmarks_proto,
-            solutions.hands.HAND_CONNECTIONS,
-            solutions.drawing_styles.get_default_hand_landmarks_style(),
-            solutions.drawing_styles.get_default_hand_connections_style())
-            # Get the top left corner of the detected hand's bounding box.
-            height, width, _ = annotated_image.shape
-            x_coordinates = [landmark.x for landmark in hand_landmarks]
-            y_coordinates = [landmark.y for landmark in hand_landmarks]
-            text_x = int(min(x_coordinates) * width)
-            text_y = int(min(y_coordinates) * height) - self.V_MARGIN
-            # Draw handedness (left or right hand) on the image.
-            cv2.putText(annotated_image, f"{handedness[0].category_name}",
-                        (text_x, text_y), cv2.FONT_HERSHEY_DUPLEX,
-                        self.FONT_SIZE, self.HANDEDNESS_TEXT_COLOR, self.FONT_THICKNESS, cv2.LINE_AA)
-        return annotated_image
+    # def visualize_with_mp(self, image):
+    #     hand_landmarks_list = self.results.hand_landmarks
+    #     handedness_list = self.results.handedness
+    #     annotated_image = np.copy(image)
+    #     # Loop through the detected hands to visualize.
+    #     for idx in range(len(hand_landmarks_list)):
+    #         hand_landmarks = hand_landmarks_list[idx]
+    #         handedness = handedness_list[idx]
+    #         # Draw the hand landmarks.
+    #         hand_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
+    #         hand_landmarks_proto.landmark.extend([
+    #         landmark_pb2.NormalizedLandmark(x=landmark.x, y=landmark.y, z=landmark.z) for landmark in hand_landmarks])
+    #         solutions.drawing_utils.draw_landmarks(
+    #         annotated_image,
+    #         hand_landmarks_proto,
+    #         solutions.hands.HAND_CONNECTIONS,
+    #         solutions.drawing_styles.get_default_hand_landmarks_style(),
+    #         solutions.drawing_styles.get_default_hand_connections_style())
+    #         # Get the top left corner of the detected hand's bounding box.
+    #         height, width, _ = annotated_image.shape
+    #         x_coordinates = [landmark.x for landmark in hand_landmarks]
+    #         y_coordinates = [landmark.y for landmark in hand_landmarks]
+    #         text_x = int(min(x_coordinates) * width)
+    #         text_y = int(min(y_coordinates) * height) - self.V_MARGIN
+    #         # Draw handedness (left or right hand) on the image.
+    #         cv2.putText(annotated_image, f"{handedness[0].category_name}",
+    #                     (text_x, text_y), cv2.FONT_HERSHEY_DUPLEX,
+    #                     self.FONT_SIZE, self.HANDEDNESS_TEXT_COLOR, self.FONT_THICKNESS, cv2.LINE_AA)
+    #     return annotated_image
 
     def release(self):
         self.detector.close()

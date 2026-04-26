@@ -3,6 +3,7 @@
 models/
 pip/
 sample/Me*.py
+code/learned_models/*
 
 
 # Byte-compiled / optimized / DLL files
