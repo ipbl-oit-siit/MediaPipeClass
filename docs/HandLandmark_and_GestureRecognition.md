@@ -59,8 +59,8 @@
 - `category_score = get_score_handedness( id_hand )`
 - `annotated_image = visualize( image )`
   - `annotated_image`: Image with hand landmark points and category names for all detected hands on the input image
-- `annotated_image = visualize_with_mp( image )`
-  - mediapipe visualizing settings
+<!-- - `annotated_image = visualize_with_mp( image )`
+  - mediapipe visualizing settings -->
 - `release()`: Close mediapipe's `detector`
 ### how to use
 - simple sample
@@ -116,7 +116,7 @@ cap.release()
   - e.g. `victory`, `thumbs up`
 - `gesture_score = get_gesture( id_hand )`
 - [inheritance] `annotated_image = visualize( image )`
-- [inheritance] `annotated_image = visualize_with_mp( image )`
+<!-- - [inheritance] `annotated_image = visualize_with_mp( image )` -->
 - `release()`: Close mediapipe's `recognizer`
 ### how to use
 - simple sample

@@ -497,7 +497,7 @@ def draw_cog_point_of_all_tips(image, Hand):
         all_seg_mask = Pose.get_all_segmentation_masks()
 
         normalized_seg_mask = all_seg_mask.astype(float)/np.max(all_seg_mask) # normalize [0.0, 1.0]
-        mask = np.tile(normalized_seg_mask[:,:,None], [1,1,3])*0.7 + 0.3
+        mask = np.tile(normalized_seg_mask, [1,1,3])*0.7 + 0.3
         return (image * mask).astype(np.uint8)
     ```
     ```python

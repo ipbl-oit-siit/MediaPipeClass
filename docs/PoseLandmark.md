@@ -74,8 +74,8 @@
   - `masked_image`: masked image by using input `mask`
 - `annotated_image = visualize( image )`
   - `annotated_image`: Image with pose landmarks for all detected poses on the input image
-- `annotated_image = visualize_with_mp( image )`
-  - mediapipe visualizing settings
+<!-- - `annotated_image = visualize_with_mp( image )`
+  - mediapipe visualizing settings -->
 - `release()`: Close mediapipe's `detector`
 ### how to use
 - simple sample

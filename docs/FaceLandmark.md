@@ -61,8 +61,8 @@
       - Value Range: `x:0-width`, `y:0-height`, `z:0-width`
 - `annotated_image = visualize( image )`
   - `annotated_image`: Image with face landmarks for all detected faces on the input image
-- `annotated_image = visualize_with_mp( image )`
-  - mediapipe visualizing settings
+<!-- - `annotated_image = visualize_with_mp( image )`
+  - mediapipe visualizing settings -->
 - `release()`: Close mediapipe's `detector`
 ### how to use
 - simple sample
