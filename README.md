@@ -1,4 +1,5 @@
-[Portal Site](https://github.com/ipbl-oit-siit/portal/tree/main) / [image_recognition Site](https://github.com/ipbl-oit-siit/image_recognition/tree/main)
+[Portal Site](https://github.com/ipbl-oit-siit/portal/tree/main) / [drone programming Site](https://github.com/ipbl-oit-siit/drone_programming/tree/main)
+<!-- [Portal Site](https://github.com/ipbl-oit-siit/portal/tree/main) / [image_recognition Site](https://github.com/ipbl-oit-siit/image_recognition/tree/main) -->
 
 # MediaPipe Class for iPBL
 - <mediapipe 0.10.33.0> or later
